@@ -196,7 +196,7 @@
                     "targets": [
                         {
                             "dsType": "prometheus",
-                            "expr": "application_httprequests_one_minute_error_percentage_rate{job=\"$job\",endpoint=\"$endpoint\",instance=\"$instance\"}",
+                            "expr": "application_httprequests_error_percentage_rate{job=\"$job\",endpoint=\"$endpoint\",instance=~\"$instance\"}",
                             "groupBy": [],
                             "intervalFactor": 2,
                             "measurement": "application.httprequests__one_minute_error_percentage_rate",
@@ -724,7 +724,7 @@
                         {
                             "alias": "$col",
                             "dsType": "prometheus",
-                            "expr": "application_httprequests_transactions{job=\"$job\",endpoint=\"$endpoint\",instance=\"$instance\",quantile=\"0.75\"}",
+                            "expr": "request_latency_seconds_bucket{job=\"$job\",endpoint=\"$endpoint\",instance=~\"$instance\",le=\"0.75\"}",
                             "groupBy": [
                                 {
                                     "params": [
@@ -818,14 +818,14 @@
                             ]
                         },
                         {
-                            "expr": "application_httprequests_transactions{job=\"$job\",endpoint=\"$endpoint\",instance=\"$instance\",quantile=\"0.95\"}",
+                            "expr": "request_latency_seconds_bucket{job=\"$job\",endpoint=\"$endpoint\",instance=~\"$instance\",le=\"1\"}",
                             "intervalFactor": 2,
                             "legendFormat": "95th Percentile",
                             "refId": "B",
                             "step": 10
                         },
                         {
-                            "expr": "application_httprequests_transactions{job=\"$job\",endpoint=\"$endpoint\",instance=\"$instance\",quantile=\"0.99\"}",
+                            "expr": "request_latency_seconds_bucket{job=\"$job\",endpoint=\"$endpoint\",instance=~\"$instance\",le=\"10\"}",
                             "intervalFactor": 2,
                             "legendFormat": "99th Percentile",
                             "refId": "C",
@@ -905,7 +905,7 @@
                         {
                             "alias": "",
                             "dsType": "prometheus",
-                            "expr": "application_httprequests_one_minute_error_percentage_rate{job=\"$job\",endpoint=\"$endpoint\",instance=\"$instance\"}",
+                            "expr": "application_httprequests_one_minute_error_percentage_rate{job=\"$job\",endpoint=\"$endpoint\",instance=~\"$instance\"}",
                             "groupBy": [
                                 {
                                     "params": [
@@ -1024,7 +1024,7 @@
                         {
                             "alias": "$tag_http_status_code",
                             "dsType": "prometheus",
-                            "expr": "application_httprequests_errors{job=\"$job\",endpoint=\"$endpoint\",instance=\"$instance\"}",
+                            "expr": "application_httprequests_errors{job=\"$job\",endpoint=\"$endpoint\",instance=~\"$instance\"}",
                             "groupBy": [
                                 {
                                     "params": [
@@ -1111,7 +1111,7 @@
                         {
                             "alias": "$col",
                             "dsType": "prometheus",
-                            "expr": "rate(application_httprequests_error_rate_total[1m])*60",
+                            "expr": "rate(application_httprequests_errors{job=\"$job\",endpoint=\"$endpoint\",instance=~\"$instance\"}[1m])*60",
                             "groupBy": [
                                 {
                                     "params": [
@@ -1204,14 +1204,14 @@
                             ]
                         },
                         {
-                            "expr": "rate(application_httprequests_error_rate_total[5m])*60",
+                            "expr": "rate(application_httprequests_errors{job=\"$job\",endpoint=\"$endpoint\",instance=~\"$instance\"}[5m])*60",
                             "intervalFactor": 2,
                             "legendFormat": "5min rate",
                             "refId": "B",
                             "step": 10
                         },
                         {
-                            "expr": "rate(application_httprequests_error_rate_total[15m])*60",
+                            "expr": "rate(application_httprequests_errors{job=\"$job\",endpoint=\"$endpoint\",instance=~\"$instance\"}[15m])*60",
                             "intervalFactor": 2,
                             "legendFormat": "15min rate",
                             "refId": "C",
@@ -1305,7 +1305,7 @@
                         {
                             "alias": "$tag_route",
                             "dsType": "prometheus",
-                            "expr": "rate(application_httprequests_transactions_per_endpoint_count{job=\"$job\",endpoint=\"$endpoint\",instance=\"$instance\"}[1m])*60",
+                            "expr": "rate(request_latency_seconds_count{job=\"$job\",endpoint=\"$endpoint\",instance=~\"$instance\"}[1m])*60",
                             "groupBy": [
                                 {
                                     "params": [
@@ -1436,7 +1436,7 @@
                         {
                             "alias": "$tag_route",
                             "dsType": "prometheus",
-                            "expr": "application_httprequests_transactions_per_endpoint{job=\"$job\",endpoint=\"$endpoint\",instance=\"$instance\",quantile=\"0.95\"}",
+                            "expr": "request_latency_seconds_bucket{job=\"$job\",endpoint=\"$endpoint\",instance=~\"$instance\",le=\"1.0\"}",
                             "groupBy": [
                                 {
                                     "params": [
@@ -1582,7 +1582,7 @@
                         {
                             "alias": "$tag_route",
                             "dsType": "prometheus",
-                            "expr": "application_httprequests_transactions_per_endpoint{job=\"$job\",endpoint=\"$endpoint\",instance=\"$instance\",quantile=\"0.95\"}",
+                            "expr": "request_latency_seconds_bucket{job=\"$job\",endpoint=\"$endpoint\",instance=~\"$instance\",le=\"1.0\"}",
                             "groupBy": [
                                 {
                                     "params": [
@@ -1690,7 +1690,7 @@
                         {
                             "alias": "$tag_route",
                             "dsType": "prometheus",
-                            "expr": "application_httprequests_one_minute_error_percentage_rate_per_endpoint{job=\"$job\",endpoint=\"$endpoint\",instance=\"$instance\"}",
+                            "expr": "application_httprequests_one_minute_error_percentage_rate_per_endpoint{job=\"$job\",endpoint=\"$endpoint\",instance=~\"$instance\"}",
                             "groupBy": [
                                 {
                                     "params": [
@@ -1798,7 +1798,7 @@
                         {
                             "alias": "$tag_route",
                             "dsType": "prometheus",
-                            "expr": "rate(application_httprequests_transactions_per_endpoint_count{job=\"$job\",endpoint=\"$endpoint\",instance=\"$instance\"}[1m])*60",
+                            "expr": "rate(request_latency_seconds_count{job=\"$job\",endpoint=\"$endpoint\",instance=~\"$instance\"}[1m])*60",
                             "groupBy": [
                                 {
                                     "params": [
@@ -1922,7 +1922,7 @@
                         {
                             "alias": "$tag_health_check_name",
                             "dsType": "prometheus",
-                            "expr": "application_health_results{job=\"stage\",endpoint=\"$endpoint\",instance=\"$instance\"}",
+                            "expr": "application_health_results{job=\"stage\",endpoint=\"$endpoint\",instance=~\"$instance\"}",
                             "groupBy": [
                                 {
                                     "params": [
@@ -2059,7 +2059,7 @@
                     "targets": [
                         {
                             "dsType": "prometheus",
-                            "expr": "application_health_score{job=\"stage\",endpoint=\"$endpoint\",instance=\"$instance\"}",
+                            "expr": "application_health_score{job=\"stage\",endpoint=\"$endpoint\",instance=~\"$instance\"}",
                             "groupBy": [
                                 {
                                     "params": [
@@ -2184,7 +2184,7 @@
                         {
                             "alias": "$col",
                             "dsType": "prometheus",
-                            "expr": "application_httprequests_post_size{job=\"$job\",endpoint=\"$endpoint\",instance=\"$instance\",quantile=\"0.75\"}",
+                            "expr": "application_httprequests_post_size{job=\"$job\",endpoint=\"$endpoint\",instance=~\"$instance\",quantile=\"0.75\"}",
                             "groupBy": [
                                 {
                                     "params": [
@@ -2295,14 +2295,14 @@
                             ]
                         },
                         {
-                            "expr": "application_httprequests_post_size{job=\"$job\",endpoint=\"$endpoint\",instance=\"$instance\",quantile=\"0.95\"}",
+                            "expr": "application_httprequests_post_size{job=\"$job\",endpoint=\"$endpoint\",instance=~\"$instance\",quantile=\"0.95\"}",
                             "intervalFactor": 2,
                             "legendFormat": "95th Percentile",
                             "refId": "B",
                             "step": 10
                         },
                         {
-                            "expr": "application_httprequests_post_size{job=\"$job\",endpoint=\"$endpoint\",instance=\"$instance\",quantile=\"0.99\"}",
+                            "expr": "application_httprequests_post_size{job=\"$job\",endpoint=\"$endpoint\",instance=~\"$instance\",quantile=\"0.99\"}",
                             "intervalFactor": 2,
                             "legendFormat": "99th Percentile",
                             "refId": "C",
@@ -2381,7 +2381,7 @@
                         {
                             "alias": "$col",
                             "dsType": "prometheus",
-                            "expr": "application_httprequests_put_size{job=\"$job\",endpoint=\"$endpoint\",instance=\"$instance\",quantile=\"0.75\"}",
+                            "expr": "application_httprequests_put_size{job=\"$job\",endpoint=\"$endpoint\",instance=~\"$instance\",quantile=\"0.75\"}",
                             "groupBy": [
                                 {
                                     "params": [
@@ -2492,14 +2492,14 @@
                             ]
                         },
                         {
-                            "expr": "application_httprequests_put_size{job=\"$job\",endpoint=\"$endpoint\",instance=\"$instance\",quantile=\"0.95\"}",
+                            "expr": "application_httprequests_put_size{job=\"$job\",endpoint=\"$endpoint\",instance=~\"$instance\",quantile=\"0.95\"}",
                             "intervalFactor": 2,
                             "legendFormat": "95th Percentile",
                             "refId": "B",
                             "step": 10
                         },
                         {
-                            "expr": "application_httprequests_put_size{job=\"$job\",endpoint=\"$endpoint\",instance=\"$instance\",quantile=\"0.99\"}",
+                            "expr": "application_httprequests_put_size{job=\"$job\",endpoint=\"$endpoint\",instance=~\"$instance\",quantile=\"0.99\"}",
                             "intervalFactor": 2,
                             "legendFormat": "99th Percentile",
                             "refId": "C",
