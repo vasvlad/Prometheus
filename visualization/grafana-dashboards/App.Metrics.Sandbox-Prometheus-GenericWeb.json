@@ -278,7 +278,7 @@
                         {
                             "alias": "",
                             "dsType": "prometheus",
-                            "expr": "application_httprequests_active{job=\"$job\",endpoint=\"$endpoint\",instance=\"$instance\"}",
+                            "expr": "application_httprequests_active{job=\"$job\",endpoint=\"$endpoint\",instance=~\"$instance\"}",
                             "groupBy": [
                                 {
                                     "params": [
@@ -400,7 +400,7 @@
                     "targets": [
                         {
                             "dsType": "prometheus",
-                            "expr": "application_httprequests_apdex{job=\"stage\",endpoint=\"$endpoint\",instance=\"$instance\"}",
+                            "expr": "rate(request_latency_seconds_sum{job=\"$job\",endpoint=\"$endpoint\",instance=~\"$instance\"}[5m])/rate(request_latency_seconds_count{job=\"$job\",endpoint=\"$endpoint\",instance=~\"$instance\"}[5m])",
                             "groupBy": [
                                 {
                                     "params": [
@@ -544,7 +544,7 @@
                         {
                             "alias": "$col",
                             "dsType": "prometheus",
-                            "expr": "rate(application_httprequests_transactions_count{job=\"$job\",endpoint=\"$endpoint\",instance=\"$instance\"}[1m])*60",
+                            "expr": "rate(application_httprequests_transactions_count{job=\"$job\",endpoint=\"$endpoint\",instance=~\"$instance\"}[1m])*60",
                             "groupBy": [
                                 {
                                     "params": [
@@ -637,14 +637,14 @@
                             ]
                         },
                         {
-                            "expr": "rate(application_httprequests_transactions_count{job=\"$job\",endpoint=\"$endpoint\",instance=\"$instance\"}[5m])*60",
+                            "expr": "rate(application_httprequests_transactions_count{job=\"$job\",endpoint=\"$endpoint\",instance=~\"$instance\"}[5m])*60",
                             "intervalFactor": 2,
                             "legendFormat": "5 min rate",
                             "refId": "B",
                             "step": 10
                         },
                         {
-                            "expr": "rate(application_httprequests_transactions_count{job=\"$job\",endpoint=\"$endpoint\",instance=\"$instance\"}[15m])*60",
+                            "expr": "rate(application_httprequests_transactions_count{job=\"$job\",endpoint=\"$endpoint\",instance=~\"$instance\"}[15m])*60",
                             "intervalFactor": 2,
                             "legendFormat": "15 min rate",
                             "refId": "C",
