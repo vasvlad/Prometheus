@@ -724,7 +724,7 @@
                         {
                             "alias": "$col",
                             "dsType": "prometheus",
-                            "expr": "request_latency_seconds_bucket{job=\"$job\",endpoint=\"$endpoint\",instance=~\"$instance\",le=\"0.75\"}",
+                            "expr": "histogram_quantile(0.5, sum without(instance) (rate(request_latency_seconds_bucket{job=\"$job\",endpoint=\"$endpoint\",instance=~\"$instance\"}[5m])))",
                             "groupBy": [
                                 {
                                     "params": [
@@ -740,7 +740,7 @@
                                 }
                             ],
                             "intervalFactor": 2,
-                            "legendFormat": "75th Percentile",
+                            "legendFormat": "50th Percentile",
                             "measurement": "application.httprequests__transactions",
                             "metric": "",
                             "policy": "default",
@@ -818,17 +818,31 @@
                             ]
                         },
                         {
-                            "expr": "request_latency_seconds_bucket{job=\"$job\",endpoint=\"$endpoint\",instance=~\"$instance\",le=\"1\"}",
+                            "expr": "histogram_quantile(0.95, sum without(instance) (rate(request_latency_seconds_bucket{job=\"$job\",endpoint=\"$endpoint\",instance=~\"$instance\"}[5m])))",
                             "intervalFactor": 2,
                             "legendFormat": "95th Percentile",
                             "refId": "B",
                             "step": 10
                         },
                         {
-                            "expr": "request_latency_seconds_bucket{job=\"$job\",endpoint=\"$endpoint\",instance=~\"$instance\",le=\"10\"}",
+                            "expr": "histogram_quantile(0.99, sum without(instance) (rate(request_latency_seconds_bucket{job=\"$job\",endpoint=\"$endpoint\",instance=~\"$instance\"}[5m])))",
                             "intervalFactor": 2,
                             "legendFormat": "99th Percentile",
                             "refId": "C",
+                            "step": 10
+                        },
+                        {
+                            "expr": "histogram_quantile(1, sum without(instance) (rate(request_latency_seconds_bucket{job=\"$job\",endpoint=\"$endpoint\",instance=~\"$instance\"}[5m])))",
+                            "intervalFactor": 2,
+                            "legendFormat": "Max",
+                            "refId": "D",
+                            "step": 10
+                        },
+                        {
+                            "expr": "histogram_quantile(1e-9, sum without(instance) (rate(request_latency_seconds_bucket{job=\"$job\",endpoint=\"$endpoint\",instance=~\"$instance\"}[5m])))",
+                            "intervalFactor": 2,
+                            "legendFormat": "Min",
+                            "refId": "E",
                             "step": 10
                         }
                     ],
