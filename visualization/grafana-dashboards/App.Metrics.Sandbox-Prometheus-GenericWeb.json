@@ -73,7 +73,7 @@
                     "targets": [
                         {
                             "dsType": "prometheus",
-                            "expr": "rate(application_httprequests_transactions_count{job=\"$job\",endpoint=\"$endpoint\",instance=~\"$instance\"}[1m])*60",
+                            "expr": "sum(rate(application_httprequests_transactions_count{job=\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\"}[1m]))*60",
                             "groupBy": [
                                 {
                                     "params": [
@@ -196,7 +196,7 @@
                     "targets": [
                         {
                             "dsType": "prometheus",
-                            "expr": "application_httprequests_error_percentage_rate{job=\"$job\",endpoint=\"$endpoint\",instance=~\"$instance\"}",
+                            "expr": "sum(application_httprequests_error_percentage_rate{job=\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\"})",
                             "groupBy": [],
                             "intervalFactor": 2,
                             "measurement": "application.httprequests__one_minute_error_percentage_rate",
@@ -278,7 +278,7 @@
                         {
                             "alias": "",
                             "dsType": "prometheus",
-                            "expr": "application_httprequests_active{job=\"$job\",endpoint=\"$endpoint\",instance=~\"$instance\"}",
+                            "expr": "sum(application_httprequests_active{job=\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\"})",
                             "groupBy": [
                                 {
                                     "params": [
@@ -544,7 +544,7 @@
                         {
                             "alias": "$col",
                             "dsType": "prometheus",
-                            "expr": "rate(application_httprequests_transactions_count{job=\"$job\",endpoint=\"$endpoint\",instance=~\"$instance\"}[1m])*60",
+                            "expr": "sum(rate(application_httprequests_transactions_count{job=\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\"}[1m]))*60",
                             "groupBy": [
                                 {
                                     "params": [
@@ -637,14 +637,14 @@
                             ]
                         },
                         {
-                            "expr": "rate(application_httprequests_transactions_count{job=\"$job\",endpoint=\"$endpoint\",instance=~\"$instance\"}[5m])*60",
+                            "expr": "sum(rate(application_httprequests_transactions_count{job=\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\"}[5m]))*60",
                             "intervalFactor": 2,
                             "legendFormat": "5 min rate",
                             "refId": "B",
                             "step": 10
                         },
                         {
-                            "expr": "rate(application_httprequests_transactions_count{job=\"$job\",endpoint=\"$endpoint\",instance=~\"$instance\"}[15m])*60",
+                            "expr": "sum(rate(application_httprequests_transactions_count{job=\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\"}[15m]))*60",
                             "intervalFactor": 2,
                             "legendFormat": "15 min rate",
                             "refId": "C",
@@ -724,7 +724,7 @@
                         {
                             "alias": "$col",
                             "dsType": "prometheus",
-                            "expr": "histogram_quantile(0.5, sum without(instance) (rate(request_latency_seconds_bucket{job=\"$job\",endpoint=\"$endpoint\",instance=~\"$instance\"}[5m])))",
+                            "expr": "sum(histogram_quantile(0.5, sum without(instance) (rate(request_latency_seconds_bucket{job=\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\"}[5m]))))",
                             "groupBy": [
                                 {
                                     "params": [
@@ -818,28 +818,28 @@
                             ]
                         },
                         {
-                            "expr": "histogram_quantile(0.95, sum without(instance) (rate(request_latency_seconds_bucket{job=\"$job\",endpoint=\"$endpoint\",instance=~\"$instance\"}[5m])))",
+                            "expr": "histogram_quantile(0.95, sum without(instance,endpoint) (rate(request_latency_seconds_bucket{job=\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\"}[5m])))",
                             "intervalFactor": 2,
                             "legendFormat": "95th Percentile",
                             "refId": "B",
                             "step": 10
                         },
                         {
-                            "expr": "histogram_quantile(0.99, sum without(instance) (rate(request_latency_seconds_bucket{job=\"$job\",endpoint=\"$endpoint\",instance=~\"$instance\"}[5m])))",
+                            "expr": "histogram_quantile(0.99, sum without(instance,endpoint) (rate(request_latency_seconds_bucket{job=\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\"}[5m])))",
                             "intervalFactor": 2,
                             "legendFormat": "99th Percentile",
                             "refId": "C",
                             "step": 10
                         },
                         {
-                            "expr": "histogram_quantile(1, sum without(instance) (rate(request_latency_seconds_bucket{job=\"$job\",endpoint=\"$endpoint\",instance=~\"$instance\"}[5m])))",
+                            "expr": "histogram_quantile(1, sum without(instance,endpoint) (rate(request_latency_seconds_bucket{job=\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\"}[5m])))",
                             "intervalFactor": 2,
                             "legendFormat": "Max",
                             "refId": "D",
                             "step": 10
                         },
                         {
-                            "expr": "histogram_quantile(1e-9, sum without(instance) (rate(request_latency_seconds_bucket{job=\"$job\",endpoint=\"$endpoint\",instance=~\"$instance\"}[5m])))",
+                            "expr": "histogram_quantile(1e-9, sum without(instance,endpoint) (rate(request_latency_seconds_bucket{job=\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\"}[5m])))",
                             "intervalFactor": 2,
                             "legendFormat": "Min",
                             "refId": "E",
@@ -1038,7 +1038,7 @@
                         {
                             "alias": "$tag_http_status_code",
                             "dsType": "prometheus",
-                            "expr": "application_httprequests_errors{job=\"$job\",endpoint=\"$endpoint\",instance=~\"$instance\"}",
+                            "expr": "sum(application_httprequests_errors{job=\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\"})",
                             "groupBy": [
                                 {
                                     "params": [
@@ -1125,7 +1125,7 @@
                         {
                             "alias": "$col",
                             "dsType": "prometheus",
-                            "expr": "rate(application_httprequests_errors{job=\"$job\",endpoint=\"$endpoint\",instance=~\"$instance\"}[1m])*60",
+                            "expr": "sum(rate(application_httprequests_errors{job=\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\"}[1m]))*60",
                             "groupBy": [
                                 {
                                     "params": [
@@ -1218,14 +1218,14 @@
                             ]
                         },
                         {
-                            "expr": "rate(application_httprequests_errors{job=\"$job\",endpoint=\"$endpoint\",instance=~\"$instance\"}[5m])*60",
+                            "expr": "sum(rate(application_httprequests_errors{job=\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\"}[5m]))*60",
                             "intervalFactor": 2,
                             "legendFormat": "5min rate",
                             "refId": "B",
                             "step": 10
                         },
                         {
-                            "expr": "rate(application_httprequests_errors{job=\"$job\",endpoint=\"$endpoint\",instance=~\"$instance\"}[15m])*60",
+                            "expr": "sum(rate(application_httprequests_errors{job=\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\"}[15m]))*60",
                             "intervalFactor": 2,
                             "legendFormat": "15min rate",
                             "refId": "C",
@@ -2601,9 +2601,13 @@
                     "text": "prometheus",
                     "value": "prometheus"
                 },
+                "current": {
+                    "text": "All",
+                    "value": ".+"
+                },
                 "datasource": "$datasource",
                 "hide": 0,
-                "includeAll": false,
+                "includeAll": true,
                 "label": null,
                 "multi": false,
                 "name": "endpoint",
