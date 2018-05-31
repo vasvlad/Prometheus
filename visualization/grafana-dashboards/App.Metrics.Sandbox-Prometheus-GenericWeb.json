@@ -73,7 +73,7 @@
                     "targets": [
                         {
                             "dsType": "prometheus",
-                            "expr": "sum(rate(application_httprequests_transactions_count{job=\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\"}[1m]))*60",
+                            "expr": "sum(rate(application_httprequests_transactions_count{job=\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\"}[1m]))*60",
                             "groupBy": [
                                 {
                                     "params": [
@@ -196,7 +196,7 @@
                     "targets": [
                         {
                             "dsType": "prometheus",
-                            "expr": "sum(application_httprequests_error_percentage_rate{job=\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\"})",
+                            "expr": "sum(rate(application_httprequests_errors{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\"}[5m]))/sum(rate(application_httprequests_transactions_count{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\"}[5m]))*100",
                             "groupBy": [],
                             "intervalFactor": 2,
                             "measurement": "application.httprequests__one_minute_error_percentage_rate",
@@ -2612,7 +2612,30 @@
                 "multi": false,
                 "name": "endpoint",
                 "options": [],
-                "query": "label_values({job=\"$job\"},endpoint)",
+                "query": "label_values({job=~\"$job\"},endpoint)",
+                "refresh": 1,
+                "regex": "",
+                "sort": 1,
+                "tagValuesQuery": null,
+                "tags": [],
+                "tagsQuery": null,
+                "type": "query",
+                "useTags": false
+            },
+            {
+                "allValue": null,
+                "current": {
+                    "text": "All",
+                    "value": ".+"
+                },
+                "datasource": "$datasource",
+                "hide": 0,
+                "includeAll": true,
+                "label": null,
+                "multi": false,
+                "name": "method",
+                "options": [],
+                "query": "label_values({endpoint=~\"$endpoint\"},method)",
                 "refresh": 1,
                 "regex": "",
                 "sort": 1,
