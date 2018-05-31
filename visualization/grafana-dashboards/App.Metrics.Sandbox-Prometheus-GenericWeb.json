@@ -2612,7 +2612,7 @@
                 "multi": false,
                 "name": "endpoint",
                 "options": [],
-                "query": "label_values(endpoint)",
+                "query": "label_values({job=\"$job\"},endpoint)",
                 "refresh": 1,
                 "regex": "",
                 "sort": 1,
