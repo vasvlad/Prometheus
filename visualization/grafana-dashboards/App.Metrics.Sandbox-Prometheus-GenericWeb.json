@@ -724,7 +724,7 @@
                         {
                             "alias": "$col",
                             "dsType": "prometheus",
-                            "expr": "sum(histogram_quantile(0.5, sum without(instance, endpoint, method) (rate(request_latency_seconds_bucket{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\"}[5m]))))",
+                            "expr": "sum(histogram_quantile(0.5, sum without(instance, endpoint, method, job) (rate(request_latency_seconds_bucket{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\"}[5m]))))",
                             "groupBy": [
                                 {
                                     "params": [
@@ -818,28 +818,28 @@
                             ]
                         },
                         {
-                            "expr": "histogram_quantile(0.95, sum without(instance,endpoint,method) (rate(request_latency_seconds_bucket{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\"}[5m])))",
+                            "expr": "sum(histogram_quantile(0.95, sum without(instance, endpoint, method, job) (rate(request_latency_seconds_bucket{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\"}[5m]))))",
                             "intervalFactor": 2,
                             "legendFormat": "95th Percentile",
                             "refId": "B",
                             "step": 10
                         },
                         {
-                            "expr": "histogram_quantile(0.99, sum without(instance,endpoint,method) (rate(request_latency_seconds_bucket{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\"}[5m])))",
+                            "expr": "sum(histogram_quantile(0.99, sum without(instance, endpoint, method, job) (rate(request_latency_seconds_bucket{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\"}[5m]))))",
                             "intervalFactor": 2,
                             "legendFormat": "99th Percentile",
                             "refId": "C",
                             "step": 10
                         },
                         {
-                            "expr": "histogram_quantile(1, sum without(instance,endpoint,method) (rate(request_latency_seconds_bucket{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\"}[5m])))",
+                            "expr": "sum(histogram_quantile(1, sum without(instance, endpoint, method, job) (rate(request_latency_seconds_bucket{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\"}[5m]))))",
                             "intervalFactor": 2,
                             "legendFormat": "Max",
                             "refId": "D",
                             "step": 10
                         },
                         {
-                            "expr": "histogram_quantile(1e-9, sum without(instance,endpoint,method) (rate(request_latency_seconds_bucket{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\"}[5m])))",
+                            "expr": "sum(histogram_quantile(1e-9, sum without(instance, endpoint, method, job) (rate(request_latency_seconds_bucket{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\"}[5m]))))",
                             "intervalFactor": 2,
                             "legendFormat": "Min",
                             "refId": "E",
