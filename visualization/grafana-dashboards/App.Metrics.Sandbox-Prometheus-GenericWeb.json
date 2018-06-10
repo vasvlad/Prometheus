@@ -2,7 +2,7 @@
   "annotations": {
     "list": [
       {
-        "$$hashKey": "object:229",
+        "$$hashKey": "object:1222",
         "builtIn": 1,
         "datasource": "-- Grafana --",
         "enable": true,
@@ -17,12 +17,12 @@
   "editable": true,
   "gnetId": 2204,
   "graphTooltip": 1,
-  "id": 77,
-  "iteration": 1528644793567,
+  "id": 75,
+  "iteration": 1528645202576,
   "links": [],
   "panels": [
     {
-      "collapsed": false,
+      "collapsed": true,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -30,1359 +30,2009 @@
         "y": 0
       },
       "id": 18,
-      "panels": [],
+      "panels": [
+        {
+          "cacheTimeout": null,
+          "colorBackground": false,
+          "colorValue": false,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "datasource": "$datasource",
+          "editable": true,
+          "error": false,
+          "format": "rpm",
+          "gauge": {
+            "maxValue": 100,
+            "minValue": 0,
+            "show": false,
+            "thresholdLabels": false,
+            "thresholdMarkers": true
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 4,
+            "x": 0,
+            "y": 1
+          },
+          "id": 8,
+          "interval": "",
+          "links": [],
+          "mappingType": 1,
+          "mappingTypes": [
+            {
+              "name": "value to text",
+              "value": 1
+            },
+            {
+              "name": "range to text",
+              "value": 2
+            }
+          ],
+          "maxDataPoints": 100,
+          "nullPointMode": "connected",
+          "nullText": null,
+          "postfix": "",
+          "postfixFontSize": "50%",
+          "prefix": "",
+          "prefixFontSize": "50%",
+          "rangeMaps": [
+            {
+              "from": "null",
+              "text": "N/A",
+              "to": "null"
+            }
+          ],
+          "sparkline": {
+            "fillColor": "rgba(31, 118, 189, 0.18)",
+            "full": true,
+            "lineColor": "rgb(31, 120, 193)",
+            "show": true
+          },
+          "tableColumn": "",
+          "targets": [
+            {
+              "dsType": "prometheus",
+              "expr": "sum(rate(application_httprequests_transactions_count{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\"}[1m]))*60",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 1,
+              "measurement": "application.httprequests__transactions",
+              "metric": "",
+              "policy": "default",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "rate1m"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "last"
+                  }
+                ]
+              ],
+              "step": 2,
+              "tags": [
+                {
+                  "key": "endpoint",
+                  "operator": "=~",
+                  "value": "/^$endpoint$/"
+                },
+                {
+                  "condition": "AND",
+                  "key": "env",
+                  "operator": "=~",
+                  "value": "/^$job$/"
+                }
+              ]
+            }
+          ],
+          "thresholds": "",
+          "title": "Throughput",
+          "type": "singlestat",
+          "valueFontSize": "80%",
+          "valueMaps": [
+            {
+              "op": "=",
+              "text": "N/A",
+              "value": "null"
+            }
+          ],
+          "valueName": "current"
+        },
+        {
+          "cacheTimeout": null,
+          "colorBackground": false,
+          "colorValue": false,
+          "colors": [
+            "rgba(50, 172, 45, 0.97)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(245, 54, 54, 0.9)"
+          ],
+          "datasource": "$datasource",
+          "decimals": 4,
+          "editable": true,
+          "error": false,
+          "format": "percent",
+          "gauge": {
+            "maxValue": 100,
+            "minValue": 0,
+            "show": false,
+            "thresholdLabels": false,
+            "thresholdMarkers": true
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 4,
+            "x": 4,
+            "y": 1
+          },
+          "id": 6,
+          "interval": null,
+          "links": [],
+          "mappingType": 1,
+          "mappingTypes": [
+            {
+              "name": "value to text",
+              "value": 1
+            },
+            {
+              "name": "range to text",
+              "value": 2
+            }
+          ],
+          "maxDataPoints": 100,
+          "nullPointMode": "connected",
+          "nullText": null,
+          "postfix": "",
+          "postfixFontSize": "50%",
+          "prefix": "",
+          "prefixFontSize": "50%",
+          "rangeMaps": [
+            {
+              "from": "",
+              "text": "",
+              "to": ""
+            }
+          ],
+          "sparkline": {
+            "fillColor": "rgba(31, 118, 189, 0.18)",
+            "full": true,
+            "lineColor": "rgb(31, 120, 193)",
+            "show": true
+          },
+          "tableColumn": "",
+          "targets": [
+            {
+              "dsType": "prometheus",
+              "expr": "sum(rate(application_httprequests_errors{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\"}[5m]))/sum(rate(application_httprequests_transactions_count{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\"}[5m]))*100",
+              "groupBy": [],
+              "intervalFactor": 2,
+              "measurement": "application.httprequests__one_minute_error_percentage_rate",
+              "policy": "default",
+              "query": "SELECT  \"value\" FROM \"application.httprequests__percentage_error_requests\" WHERE $timeFilter",
+              "rawQuery": false,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  }
+                ]
+              ],
+              "step": 4,
+              "tags": [
+                {
+                  "key": "env",
+                  "operator": "=~",
+                  "value": "/^$job$/"
+                },
+                {
+                  "condition": "AND",
+                  "key": "endpoint",
+                  "operator": "=~",
+                  "value": "/^$endpoint$/"
+                }
+              ]
+            }
+          ],
+          "thresholds": "",
+          "title": "Error %",
+          "type": "singlestat",
+          "valueFontSize": "80%",
+          "valueMaps": [
+            {
+              "op": "=",
+              "text": "0%",
+              "value": "null"
+            }
+          ],
+          "valueName": "current"
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "$datasource",
+          "editable": true,
+          "error": false,
+          "fill": 2,
+          "gridPos": {
+            "h": 7,
+            "w": 8,
+            "x": 8,
+            "y": 1
+          },
+          "id": 13,
+          "interval": "$summarize",
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": false,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "",
+              "dsType": "prometheus",
+              "expr": "sum(application_httprequests_active{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\", method=~\"$method\"})",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 2,
+              "measurement": "application.httprequests__active",
+              "policy": "default",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "last"
+                  }
+                ]
+              ],
+              "step": 10,
+              "tags": [
+                {
+                  "key": "env",
+                  "operator": "=~",
+                  "value": "/^$job$/"
+                },
+                {
+                  "condition": "AND",
+                  "key": "endpoint",
+                  "operator": "=~",
+                  "value": "/^$endpoint$/"
+                }
+              ]
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Active Requests",
+          "tooltip": {
+            "msResolution": false,
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
+        },
+        {
+          "aliasColors": {
+            "application.httprequests__apdex.last": "#6ED0E0"
+          },
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "$datasource",
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "gridPos": {
+            "h": 7,
+            "w": 8,
+            "x": 16,
+            "y": 1
+          },
+          "height": "",
+          "id": 7,
+          "interval": "$summarize",
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": false,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 3,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "dsType": "prometheus",
+              "expr": "rate(request_latency_seconds_sum{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\" ,method=~\"$method\"}[5m])/rate(request_latency_seconds_count{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\"}[5m])",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 2,
+              "measurement": "application.httprequests__apdex",
+              "metric": "application_httprequests_apdex",
+              "policy": "default",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "score"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "last"
+                  }
+                ]
+              ],
+              "step": 10,
+              "tags": [
+                {
+                  "key": "endpoint",
+                  "operator": "=~",
+                  "value": "/^$endpoint$/"
+                },
+                {
+                  "condition": "AND",
+                  "key": "env",
+                  "operator": "=~",
+                  "value": "/^$job$/"
+                }
+              ]
+            }
+          ],
+          "thresholds": [
+            {
+              "colorMode": "critical",
+              "fill": true,
+              "line": true,
+              "op": "lt",
+              "value": 0.5
+            },
+            {
+              "colorMode": "warning",
+              "fill": true,
+              "line": true,
+              "op": "gt",
+              "value": 0.5
+            },
+            {
+              "colorMode": "ok",
+              "fill": true,
+              "line": true,
+              "op": "gt",
+              "value": 0.75
+            }
+          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Apdex score",
+          "tooltip": {
+            "msResolution": false,
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": "apdex",
+              "logBase": 1,
+              "max": "1",
+              "min": "0",
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": false
+            }
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "$datasource",
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "gridPos": {
+            "h": 9,
+            "w": 12,
+            "x": 0,
+            "y": 8
+          },
+          "height": "350",
+          "id": 1,
+          "interval": "$summarize",
+          "legend": {
+            "avg": false,
+            "current": true,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "$col",
+              "dsType": "prometheus",
+              "expr": "sum(rate(application_httprequests_transactions_count{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\"}[1m]))*60",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 2,
+              "legendFormat": "1 min rate",
+              "measurement": "application.httprequests__transactions",
+              "policy": "default",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "rate1m"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "last"
+                  },
+                  {
+                    "params": [
+                      "1 min rate"
+                    ],
+                    "type": "alias"
+                  }
+                ],
+                [
+                  {
+                    "params": [
+                      "rate5m"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "last"
+                  },
+                  {
+                    "params": [
+                      "5 min rate"
+                    ],
+                    "type": "alias"
+                  }
+                ],
+                [
+                  {
+                    "params": [
+                      "rate15m"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "last"
+                  },
+                  {
+                    "params": [
+                      "15 min rate"
+                    ],
+                    "type": "alias"
+                  }
+                ]
+              ],
+              "step": 10,
+              "tags": [
+                {
+                  "key": "env",
+                  "operator": "=~",
+                  "value": "/^$job$/"
+                },
+                {
+                  "condition": "AND",
+                  "key": "endpoint",
+                  "operator": "=~",
+                  "value": "/^$endpoint$/"
+                }
+              ]
+            },
+            {
+              "expr": "sum(rate(application_httprequests_transactions_count{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\"}[5m]))*60",
+              "intervalFactor": 2,
+              "legendFormat": "5 min rate",
+              "refId": "B",
+              "step": 10
+            },
+            {
+              "expr": "sum(rate(application_httprequests_transactions_count{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\"}[15m]))*60",
+              "intervalFactor": 2,
+              "legendFormat": "15 min rate",
+              "refId": "C",
+              "step": 10
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Throughput",
+          "tooltip": {
+            "msResolution": false,
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "rpm",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "$datasource",
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "gridPos": {
+            "h": 9,
+            "w": 12,
+            "x": 12,
+            "y": 8
+          },
+          "height": "350",
+          "id": 2,
+          "interval": "$summarize",
+          "legend": {
+            "alignAsTable": false,
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "rightSide": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "$col",
+              "dsType": "prometheus",
+              "expr": "sum(histogram_quantile(0.5, sum without(instance, endpoint, method, job) (rate(request_latency_seconds_bucket{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\"}[5m]))))",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 2,
+              "legendFormat": "50th Percentile",
+              "measurement": "application.httprequests__transactions",
+              "metric": "",
+              "policy": "default",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "p95"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "last"
+                  },
+                  {
+                    "params": [
+                      "95th Percentile"
+                    ],
+                    "type": "alias"
+                  }
+                ],
+                [
+                  {
+                    "params": [
+                      "p98"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "last"
+                  },
+                  {
+                    "params": [
+                      "98th Percentile"
+                    ],
+                    "type": "alias"
+                  }
+                ],
+                [
+                  {
+                    "params": [
+                      "p99"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "last"
+                  },
+                  {
+                    "params": [
+                      "99th Percentile"
+                    ],
+                    "type": "alias"
+                  }
+                ]
+              ],
+              "step": 10,
+              "tags": [
+                {
+                  "key": "env",
+                  "operator": "=~",
+                  "value": "/^$job$/"
+                },
+                {
+                  "condition": "AND",
+                  "key": "endpoint",
+                  "operator": "=~",
+                  "value": "/^$endpoint$/"
+                }
+              ]
+            },
+            {
+              "expr": "sum(histogram_quantile(0.95, sum without(instance, endpoint, method, job) (rate(request_latency_seconds_bucket{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\"}[5m]))))",
+              "intervalFactor": 2,
+              "legendFormat": "95th Percentile",
+              "refId": "B",
+              "step": 10
+            },
+            {
+              "expr": "sum(histogram_quantile(0.99, sum without(instance, endpoint, method, job) (rate(request_latency_seconds_bucket{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\"}[5m]))))",
+              "intervalFactor": 2,
+              "legendFormat": "99th Percentile",
+              "refId": "C",
+              "step": 10
+            },
+            {
+              "expr": "sum(histogram_quantile(1, sum without(instance, endpoint, method, job) (rate(request_latency_seconds_bucket{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\"}[5m]))))",
+              "intervalFactor": 2,
+              "legendFormat": "Max",
+              "refId": "D",
+              "step": 10
+            },
+            {
+              "expr": "sum(histogram_quantile(1e-9, sum without(instance, endpoint, method, job) (rate(request_latency_seconds_bucket{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\"}[5m]))))",
+              "intervalFactor": 2,
+              "legendFormat": "Min",
+              "refId": "E",
+              "step": 10
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Response Time",
+          "tooltip": {
+            "msResolution": false,
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "ms",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "$datasource",
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "gridPos": {
+            "h": 7,
+            "w": 8,
+            "x": 0,
+            "y": 17
+          },
+          "height": "",
+          "id": 9,
+          "interval": "$summarize",
+          "legend": {
+            "alignAsTable": true,
+            "avg": false,
+            "current": true,
+            "max": false,
+            "min": false,
+            "rightSide": true,
+            "show": false,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "",
+              "dsType": "prometheus",
+              "expr": "rate(application_httprequests_errors{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\"}[1m])/rate(application_httprequests_transactions_count{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\"}[1m])*100",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 2,
+              "measurement": "application.httprequests__one_minute_error_percentage_rate",
+              "policy": "default",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "last"
+                  }
+                ]
+              ],
+              "step": 10,
+              "tags": [
+                {
+                  "key": "endpoint",
+                  "operator": "=~",
+                  "value": "/^$endpoint$/"
+                },
+                {
+                  "condition": "AND",
+                  "key": "env",
+                  "operator": "=~",
+                  "value": "/^$job$/"
+                }
+              ]
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Error Rate %",
+          "tooltip": {
+            "msResolution": false,
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "percent",
+              "label": null,
+              "logBase": 1,
+              "max": "100",
+              "min": "0",
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
+        },
+        {
+          "aliasColors": {},
+          "breakPoint": "50%",
+          "cacheTimeout": null,
+          "combine": {
+            "label": "Others",
+            "threshold": 0
+          },
+          "datasource": "$datasource",
+          "editable": true,
+          "error": false,
+          "fontSize": "80%",
+          "format": "percent",
+          "gridPos": {
+            "h": 7,
+            "w": 6,
+            "x": 8,
+            "y": 17
+          },
+          "height": "250px",
+          "id": 4,
+          "interval": "",
+          "legend": {
+            "percentage": true,
+            "show": true,
+            "sort": null,
+            "sortDesc": null,
+            "values": true
+          },
+          "legendType": "Right side",
+          "links": [],
+          "maxDataPoints": 3,
+          "nullPointMode": "connected",
+          "pieType": "pie",
+          "strokeWidth": 1,
+          "targets": [
+            {
+              "alias": "$tag_http_status_code",
+              "dsType": "prometheus",
+              "expr": "sum(application_httprequests_errors{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\"})",
+              "groupBy": [
+                {
+                  "params": [
+                    "http_status_code"
+                  ],
+                  "type": "tag"
+                }
+              ],
+              "intervalFactor": 2,
+              "legendFormat": "{{http_status_code}}",
+              "measurement": "application.httprequests__errors",
+              "policy": "default",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "sum"
+                  }
+                ]
+              ],
+              "step": 240,
+              "tags": [
+                {
+                  "key": "endpoint",
+                  "operator": "=~",
+                  "value": "/^$endpoint$/"
+                },
+                {
+                  "condition": "AND",
+                  "key": "env",
+                  "operator": "=~",
+                  "value": "/^$job$/"
+                }
+              ]
+            }
+          ],
+          "title": "Errors",
+          "type": "grafana-piechart-panel",
+          "valueName": "current"
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "$datasource",
+          "decimals": 2,
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "gridPos": {
+            "h": 7,
+            "w": 10,
+            "x": 14,
+            "y": 17
+          },
+          "height": "250px",
+          "id": 3,
+          "interval": "$summarize",
+          "legend": {
+            "alignAsTable": true,
+            "avg": false,
+            "current": true,
+            "max": false,
+            "min": false,
+            "rightSide": true,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "$col",
+              "dsType": "prometheus",
+              "expr": "sum(rate(application_httprequests_errors{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\"}[1m]))*60",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "intervalFactor": 2,
+              "legendFormat": "1min rate",
+              "measurement": "application.httprequests__error_rate",
+              "policy": "default",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "rate1m"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "last"
+                  },
+                  {
+                    "params": [
+                      "1min rate"
+                    ],
+                    "type": "alias"
+                  }
+                ],
+                [
+                  {
+                    "params": [
+                      "rate5m"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "last"
+                  },
+                  {
+                    "params": [
+                      "5min rate"
+                    ],
+                    "type": "alias"
+                  }
+                ],
+                [
+                  {
+                    "params": [
+                      "rate15m"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "last"
+                  },
+                  {
+                    "params": [
+                      "15min rate"
+                    ],
+                    "type": "alias"
+                  }
+                ]
+              ],
+              "step": 10,
+              "tags": [
+                {
+                  "key": "endpoint",
+                  "operator": "=~",
+                  "value": "/^$endpoint$/"
+                },
+                {
+                  "condition": "AND",
+                  "key": "env",
+                  "operator": "=~",
+                  "value": "/^$job$/"
+                }
+              ]
+            },
+            {
+              "expr": "sum(rate(application_httprequests_errors{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\"}[5m]))*60",
+              "intervalFactor": 2,
+              "legendFormat": "5min rate",
+              "refId": "B",
+              "step": 10
+            },
+            {
+              "expr": "sum(rate(application_httprequests_errors{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\"}[15m]))*60",
+              "intervalFactor": 2,
+              "legendFormat": "15min rate",
+              "refId": "C",
+              "step": 10
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Error Rate",
+          "tooltip": {
+            "msResolution": false,
+            "shared": true,
+            "sort": 2,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "rpm",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
+        }
+      ],
       "repeat": null,
       "title": "Overview",
       "type": "row"
     },
     {
-      "cacheTimeout": null,
-      "colorBackground": false,
-      "colorValue": false,
-      "colors": [
-        "rgba(245, 54, 54, 0.9)",
-        "rgba(237, 129, 40, 0.89)",
-        "rgba(50, 172, 45, 0.97)"
-      ],
-      "datasource": "$datasource",
-      "editable": true,
-      "error": false,
-      "format": "rpm",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": false,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
-      },
+      "collapsed": true,
       "gridPos": {
-        "h": 7,
-        "w": 4,
+        "h": 1,
+        "w": 24,
         "x": 0,
         "y": 1
       },
-      "id": 8,
-      "interval": "",
-      "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
+      "id": 19,
+      "panels": [
         {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
-      "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": true,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": true
-      },
-      "tableColumn": "",
-      "targets": [
-        {
-          "dsType": "prometheus",
-          "expr": "sum(rate(application_httprequests_transactions_count{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\"}[1m]))*60",
-          "groupBy": [
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "$datasource",
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "gridPos": {
+            "h": 9,
+            "w": 12,
+            "x": 0,
+            "y": 2
+          },
+          "height": "350",
+          "id": 16,
+          "interval": "$summarize",
+          "legend": {
+            "alignAsTable": true,
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "rightSide": true,
+            "show": true,
+            "sort": "current",
+            "sortDesc": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "stack": true,
+          "steppedLine": false,
+          "targets": [
             {
-              "params": [
-                "$interval"
+              "alias": "$tag_route",
+              "dsType": "prometheus",
+              "expr": "topk(4, rate(request_latency_seconds_count{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\"}[1m])*60)",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "route"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
               ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
+              "intervalFactor": 2,
+              "legendFormat": "{{job}}/{{endpoint}}/{{method}}",
+              "measurement": "application.httprequests__transactions_per_endpoint",
+              "policy": "default",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "rate1m"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "last"
+                  }
+                ]
               ],
-              "type": "fill"
+              "step": 10,
+              "tags": [
+                {
+                  "key": "env",
+                  "operator": "=~",
+                  "value": "/^$job$/"
+                },
+                {
+                  "condition": "AND",
+                  "key": "endpoint",
+                  "operator": "=~",
+                  "value": "/^$endpoint$/"
+                }
+              ]
             }
           ],
-          "intervalFactor": 1,
-          "measurement": "application.httprequests__transactions",
-          "metric": "",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "rate1m"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              }
-            ]
-          ],
-          "step": 2,
-          "tags": [
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Throughput / Endpoint",
+          "tooltip": {
+            "msResolution": false,
+            "shared": true,
+            "sort": 2,
+            "value_type": "individual"
+          },
+          "transparent": false,
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
             {
-              "key": "endpoint",
-              "operator": "=~",
-              "value": "/^$endpoint$/"
+              "format": "rpm",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
             },
             {
-              "condition": "AND",
-              "key": "env",
-              "operator": "=~",
-              "value": "/^$job$/"
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
             }
-          ]
-        }
-      ],
-      "thresholds": "",
-      "title": "Throughput",
-      "type": "singlestat",
-      "valueFontSize": "80%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
-      "valueName": "current"
-    },
-    {
-      "cacheTimeout": null,
-      "colorBackground": false,
-      "colorValue": false,
-      "colors": [
-        "rgba(50, 172, 45, 0.97)",
-        "rgba(237, 129, 40, 0.89)",
-        "rgba(245, 54, 54, 0.9)"
-      ],
-      "datasource": "$datasource",
-      "decimals": 4,
-      "editable": true,
-      "error": false,
-      "format": "percent",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": false,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 4,
-        "x": 4,
-        "y": 1
-      },
-      "id": 6,
-      "interval": null,
-      "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
         },
         {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
-      "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "",
-          "text": "",
-          "to": ""
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": true,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": true
-      },
-      "tableColumn": "",
-      "targets": [
-        {
-          "dsType": "prometheus",
-          "expr": "sum(rate(application_httprequests_errors{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\"}[5m]))/sum(rate(application_httprequests_transactions_count{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\"}[5m]))*100",
-          "groupBy": [],
-          "intervalFactor": 2,
-          "measurement": "application.httprequests__one_minute_error_percentage_rate",
-          "policy": "default",
-          "query": "SELECT  \"value\" FROM \"application.httprequests__percentage_error_requests\" WHERE $timeFilter",
-          "rawQuery": false,
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              }
-            ]
-          ],
-          "step": 4,
-          "tags": [
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "$datasource",
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "gridPos": {
+            "h": 9,
+            "w": 12,
+            "x": 12,
+            "y": 2
+          },
+          "height": "350",
+          "id": 17,
+          "interval": "$summarize",
+          "legend": {
+            "alignAsTable": true,
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "rightSide": true,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
             {
-              "key": "env",
-              "operator": "=~",
-              "value": "/^$job$/"
-            },
-            {
-              "condition": "AND",
-              "key": "endpoint",
-              "operator": "=~",
-              "value": "/^$endpoint$/"
-            }
-          ]
-        }
-      ],
-      "thresholds": "",
-      "title": "Error %",
-      "type": "singlestat",
-      "valueFontSize": "80%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "0%",
-          "value": "null"
-        }
-      ],
-      "valueName": "current"
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "$datasource",
-      "editable": true,
-      "error": false,
-      "fill": 2,
-      "gridPos": {
-        "h": 7,
-        "w": 8,
-        "x": 8,
-        "y": 1
-      },
-      "id": 13,
-      "interval": "$summarize",
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": false,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "connected",
-      "percentage": false,
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "alias": "",
-          "dsType": "prometheus",
-          "expr": "sum(application_httprequests_active{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\", method=~\"$method\"})",
-          "groupBy": [
-            {
-              "params": [
-                "$interval"
+              "alias": "$tag_route",
+              "dsType": "prometheus",
+              "expr": "topk(4,request_latency_seconds_bucket{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\",le=\"1.0\"})",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "route"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
               ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
+              "intervalFactor": 2,
+              "legendFormat": "{{job}}/{{endpoint}}/{{method}}",
+              "measurement": "application.httprequests__transactions_per_endpoint",
+              "policy": "default",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "p95"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "last"
+                  },
+                  {
+                    "params": [
+                      "95th Percentile"
+                    ],
+                    "type": "alias"
+                  }
+                ]
               ],
-              "type": "fill"
+              "step": 10,
+              "tags": [
+                {
+                  "key": "env",
+                  "operator": "=~",
+                  "value": "/^$job$/"
+                },
+                {
+                  "condition": "AND",
+                  "key": "endpoint",
+                  "operator": "=~",
+                  "value": "/^$endpoint$/"
+                }
+              ]
             }
           ],
-          "intervalFactor": 2,
-          "measurement": "application.httprequests__active",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              }
-            ]
-          ],
-          "step": 10,
-          "tags": [
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Response Time / Endpoint",
+          "tooltip": {
+            "msResolution": false,
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
             {
-              "key": "env",
-              "operator": "=~",
-              "value": "/^$job$/"
+              "format": "ms",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
             },
             {
-              "condition": "AND",
-              "key": "endpoint",
-              "operator": "=~",
-              "value": "/^$endpoint$/"
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
             }
-          ]
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Active Requests",
-      "tooltip": {
-        "msResolution": false,
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
         },
         {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {
-        "application.httprequests__apdex.last": "#6ED0E0"
-      },
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "$datasource",
-      "editable": true,
-      "error": false,
-      "fill": 1,
-      "gridPos": {
-        "h": 7,
-        "w": 8,
-        "x": 16,
-        "y": 1
-      },
-      "height": "",
-      "id": 7,
-      "interval": "$summarize",
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": false,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 3,
-      "links": [],
-      "nullPointMode": "connected",
-      "percentage": false,
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "dsType": "prometheus",
-          "expr": "rate(request_latency_seconds_sum{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\" ,method=~\"$method\"}[5m])/rate(request_latency_seconds_count{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\"}[5m])",
-          "groupBy": [
+          "columns": [
             {
-              "params": [
-                "$interval"
+              "text": "Current",
+              "value": "current"
+            }
+          ],
+          "datasource": "$datasource",
+          "editable": true,
+          "error": false,
+          "filterNull": false,
+          "fontSize": "100%",
+          "gridPos": {
+            "h": 8,
+            "w": 8,
+            "x": 0,
+            "y": 11
+          },
+          "id": 10,
+          "interval": "",
+          "links": [],
+          "pageSize": null,
+          "scroll": true,
+          "showHeader": true,
+          "sort": {
+            "col": 1,
+            "desc": true
+          },
+          "styles": [
+            {
+              "dateFormat": "YYYY-MM-DD HH:mm:ss",
+              "pattern": "Time",
+              "type": "date"
+            },
+            {
+              "colorMode": null,
+              "colors": [
+                "rgba(245, 54, 54, 0.9)",
+                "rgba(237, 129, 40, 0.89)",
+                "rgba(50, 172, 45, 0.97)"
               ],
-              "type": "time"
-            },
+              "decimals": 2,
+              "pattern": "/.*/",
+              "thresholds": [],
+              "type": "number",
+              "unit": "ms"
+            }
+          ],
+          "targets": [
             {
-              "params": [
-                "null"
+              "alias": "$tag_route",
+              "dsType": "prometheus",
+              "expr": "request_latency_seconds_bucket{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\",le=\"1.0\"}",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "route"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
               ],
-              "type": "fill"
-            }
-          ],
-          "intervalFactor": 2,
-          "measurement": "application.httprequests__apdex",
-          "metric": "application_httprequests_apdex",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "score"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              }
-            ]
-          ],
-          "step": 10,
-          "tags": [
-            {
-              "key": "endpoint",
-              "operator": "=~",
-              "value": "/^$endpoint$/"
-            },
-            {
-              "condition": "AND",
-              "key": "env",
-              "operator": "=~",
-              "value": "/^$job$/"
-            }
-          ]
-        }
-      ],
-      "thresholds": [
-        {
-          "colorMode": "critical",
-          "fill": true,
-          "line": true,
-          "op": "lt",
-          "value": 0.5
-        },
-        {
-          "colorMode": "warning",
-          "fill": true,
-          "line": true,
-          "op": "gt",
-          "value": 0.5
-        },
-        {
-          "colorMode": "ok",
-          "fill": true,
-          "line": true,
-          "op": "gt",
-          "value": 0.75
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Apdex score",
-      "tooltip": {
-        "msResolution": false,
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "short",
-          "label": "apdex",
-          "logBase": 1,
-          "max": "1",
-          "min": "0",
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": false
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "$datasource",
-      "editable": true,
-      "error": false,
-      "fill": 1,
-      "gridPos": {
-        "h": 9,
-        "w": 12,
-        "x": 0,
-        "y": 8
-      },
-      "height": "350",
-      "id": 1,
-      "interval": "$summarize",
-      "legend": {
-        "avg": false,
-        "current": true,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "connected",
-      "percentage": false,
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "alias": "$col",
-          "dsType": "prometheus",
-          "expr": "sum(rate(application_httprequests_transactions_count{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\"}[1m]))*60",
-          "groupBy": [
-            {
-              "params": [
-                "$interval"
+              "intervalFactor": 2,
+              "legendFormat": "{{job}}/{{endpoint}}/{{method}}",
+              "measurement": "application.httprequests__transactions_per_endpoint",
+              "policy": "default",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "p95"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "last"
+                  }
+                ]
               ],
-              "type": "time"
+              "step": 2,
+              "tags": [
+                {
+                  "key": "env",
+                  "operator": "=~",
+                  "value": "/^$job$/"
+                },
+                {
+                  "condition": "AND",
+                  "key": "endpoint",
+                  "operator": "=~",
+                  "value": "/^$endpoint$/"
+                }
+              ]
+            }
+          ],
+          "title": "Response Times / Endpoint",
+          "transform": "timeseries_aggregations",
+          "type": "table"
+        },
+        {
+          "columns": [
+            {
+              "text": "Current",
+              "value": "current"
+            }
+          ],
+          "datasource": "$datasource",
+          "editable": true,
+          "error": false,
+          "filterNull": false,
+          "fontSize": "100%",
+          "gridPos": {
+            "h": 8,
+            "w": 8,
+            "x": 8,
+            "y": 11
+          },
+          "id": 11,
+          "interval": "",
+          "links": [],
+          "pageSize": null,
+          "scroll": true,
+          "showHeader": true,
+          "sort": {
+            "col": null,
+            "desc": false
+          },
+          "styles": [
+            {
+              "dateFormat": "YYYY-MM-DD HH:mm:ss",
+              "pattern": "Time",
+              "type": "date"
             },
             {
-              "params": [
-                "null"
+              "colorMode": null,
+              "colors": [
+                "rgba(245, 54, 54, 0.9)",
+                "rgba(237, 129, 40, 0.89)",
+                "rgba(50, 172, 45, 0.97)"
               ],
-              "type": "fill"
+              "decimals": 0,
+              "pattern": "/.*/",
+              "thresholds": [],
+              "type": "number",
+              "unit": "percent"
             }
           ],
-          "intervalFactor": 2,
-          "legendFormat": "1 min rate",
-          "measurement": "application.httprequests__transactions",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "rate1m"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              },
-              {
-                "params": [
-                  "1 min rate"
-                ],
-                "type": "alias"
-              }
-            ],
-            [
-              {
-                "params": [
-                  "rate5m"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              },
-              {
-                "params": [
-                  "5 min rate"
-                ],
-                "type": "alias"
-              }
-            ],
-            [
-              {
-                "params": [
-                  "rate15m"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              },
-              {
-                "params": [
-                  "15 min rate"
-                ],
-                "type": "alias"
-              }
-            ]
-          ],
-          "step": 10,
-          "tags": [
+          "targets": [
             {
-              "key": "env",
-              "operator": "=~",
-              "value": "/^$job$/"
-            },
-            {
-              "condition": "AND",
-              "key": "endpoint",
-              "operator": "=~",
-              "value": "/^$endpoint$/"
-            }
-          ]
-        },
-        {
-          "expr": "sum(rate(application_httprequests_transactions_count{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\"}[5m]))*60",
-          "intervalFactor": 2,
-          "legendFormat": "5 min rate",
-          "refId": "B",
-          "step": 10
-        },
-        {
-          "expr": "sum(rate(application_httprequests_transactions_count{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\"}[15m]))*60",
-          "intervalFactor": 2,
-          "legendFormat": "15 min rate",
-          "refId": "C",
-          "step": 10
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Throughput",
-      "tooltip": {
-        "msResolution": false,
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "rpm",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "$datasource",
-      "editable": true,
-      "error": false,
-      "fill": 1,
-      "gridPos": {
-        "h": 9,
-        "w": 12,
-        "x": 12,
-        "y": 8
-      },
-      "height": "350",
-      "id": 2,
-      "interval": "$summarize",
-      "legend": {
-        "alignAsTable": false,
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "rightSide": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "connected",
-      "percentage": false,
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "alias": "$col",
-          "dsType": "prometheus",
-          "expr": "sum(histogram_quantile(0.5, sum without(instance, endpoint, method, job) (rate(request_latency_seconds_bucket{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\"}[5m]))))",
-          "groupBy": [
-            {
-              "params": [
-                "$interval"
+              "alias": "$tag_route",
+              "dsType": "prometheus",
+              "expr": " rate(application_httprequests_errors{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\"}[1m])/rate(application_httprequests_transactions_count{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\"}[1m])*100",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "route"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
               ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
+              "intervalFactor": 2,
+              "legendFormat": "{{job}}/{{endpoint}}/{{method}}}",
+              "measurement": "application.httprequests__one_minute_error_percentage_rate_per_endpoint",
+              "policy": "default",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "last"
+                  }
+                ]
               ],
-              "type": "fill"
+              "step": 2,
+              "tags": [
+                {
+                  "key": "endpoint",
+                  "operator": "=~",
+                  "value": "/^$endpoint$/"
+                },
+                {
+                  "condition": "AND",
+                  "key": "env",
+                  "operator": "=~",
+                  "value": "/^$job$/"
+                }
+              ]
             }
           ],
-          "intervalFactor": 2,
-          "legendFormat": "50th Percentile",
-          "measurement": "application.httprequests__transactions",
-          "metric": "",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "p95"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              },
-              {
-                "params": [
-                  "95th Percentile"
-                ],
-                "type": "alias"
-              }
-            ],
-            [
-              {
-                "params": [
-                  "p98"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              },
-              {
-                "params": [
-                  "98th Percentile"
-                ],
-                "type": "alias"
-              }
-            ],
-            [
-              {
-                "params": [
-                  "p99"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              },
-              {
-                "params": [
-                  "99th Percentile"
-                ],
-                "type": "alias"
-              }
-            ]
-          ],
-          "step": 10,
-          "tags": [
+          "title": "Error Request Percentage / Endpoint",
+          "transform": "timeseries_aggregations",
+          "type": "table"
+        },
+        {
+          "columns": [
             {
-              "key": "env",
-              "operator": "=~",
-              "value": "/^$job$/"
+              "text": "Current",
+              "value": "current"
+            }
+          ],
+          "datasource": "$datasource",
+          "editable": true,
+          "error": false,
+          "filterNull": false,
+          "fontSize": "100%",
+          "gridPos": {
+            "h": 8,
+            "w": 8,
+            "x": 16,
+            "y": 11
+          },
+          "id": 12,
+          "interval": "",
+          "links": [],
+          "pageSize": null,
+          "scroll": true,
+          "showHeader": true,
+          "sort": {
+            "col": 1,
+            "desc": true
+          },
+          "styles": [
+            {
+              "dateFormat": "YYYY-MM-DD HH:mm:ss",
+              "pattern": "Time",
+              "type": "date"
             },
             {
-              "condition": "AND",
-              "key": "endpoint",
-              "operator": "=~",
-              "value": "/^$endpoint$/"
-            }
-          ]
-        },
-        {
-          "expr": "sum(histogram_quantile(0.95, sum without(instance, endpoint, method, job) (rate(request_latency_seconds_bucket{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\"}[5m]))))",
-          "intervalFactor": 2,
-          "legendFormat": "95th Percentile",
-          "refId": "B",
-          "step": 10
-        },
-        {
-          "expr": "sum(histogram_quantile(0.99, sum without(instance, endpoint, method, job) (rate(request_latency_seconds_bucket{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\"}[5m]))))",
-          "intervalFactor": 2,
-          "legendFormat": "99th Percentile",
-          "refId": "C",
-          "step": 10
-        },
-        {
-          "expr": "sum(histogram_quantile(1, sum without(instance, endpoint, method, job) (rate(request_latency_seconds_bucket{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\"}[5m]))))",
-          "intervalFactor": 2,
-          "legendFormat": "Max",
-          "refId": "D",
-          "step": 10
-        },
-        {
-          "expr": "sum(histogram_quantile(1e-9, sum without(instance, endpoint, method, job) (rate(request_latency_seconds_bucket{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\"}[5m]))))",
-          "intervalFactor": 2,
-          "legendFormat": "Min",
-          "refId": "E",
-          "step": 10
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Response Time",
-      "tooltip": {
-        "msResolution": false,
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "ms",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "$datasource",
-      "editable": true,
-      "error": false,
-      "fill": 1,
-      "gridPos": {
-        "h": 7,
-        "w": 8,
-        "x": 0,
-        "y": 17
-      },
-      "height": "",
-      "id": 9,
-      "interval": "$summarize",
-      "legend": {
-        "alignAsTable": true,
-        "avg": false,
-        "current": true,
-        "max": false,
-        "min": false,
-        "rightSide": true,
-        "show": false,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "connected",
-      "percentage": false,
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "alias": "",
-          "dsType": "prometheus",
-          "expr": "rate(application_httprequests_errors{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\"}[1m])/rate(application_httprequests_transactions_count{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\"}[1m])*100",
-          "groupBy": [
-            {
-              "params": [
-                "$interval"
+              "colorMode": null,
+              "colors": [
+                "rgba(245, 54, 54, 0.9)",
+                "rgba(237, 129, 40, 0.89)",
+                "rgba(50, 172, 45, 0.97)"
               ],
-              "type": "time"
-            },
+              "decimals": 2,
+              "pattern": "/.*/",
+              "thresholds": [],
+              "type": "number",
+              "unit": "rpm"
+            }
+          ],
+          "targets": [
             {
-              "params": [
-                "null"
+              "alias": "$tag_route",
+              "dsType": "prometheus",
+              "expr": "rate(request_latency_seconds_count{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\"}[1m])*60",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "route"
+                  ],
+                  "type": "tag"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
               ],
-              "type": "fill"
-            }
-          ],
-          "intervalFactor": 2,
-          "measurement": "application.httprequests__one_minute_error_percentage_rate",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              }
-            ]
-          ],
-          "step": 10,
-          "tags": [
-            {
-              "key": "endpoint",
-              "operator": "=~",
-              "value": "/^$endpoint$/"
-            },
-            {
-              "condition": "AND",
-              "key": "env",
-              "operator": "=~",
-              "value": "/^$job$/"
-            }
-          ]
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Error Rate %",
-      "tooltip": {
-        "msResolution": false,
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "percent",
-          "label": null,
-          "logBase": 1,
-          "max": "100",
-          "min": "0",
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "breakPoint": "50%",
-      "cacheTimeout": null,
-      "combine": {
-        "label": "Others",
-        "threshold": 0
-      },
-      "datasource": "$datasource",
-      "editable": true,
-      "error": false,
-      "fontSize": "80%",
-      "format": "percent",
-      "gridPos": {
-        "h": 7,
-        "w": 6,
-        "x": 8,
-        "y": 17
-      },
-      "height": "250px",
-      "id": 4,
-      "interval": "",
-      "legend": {
-        "percentage": true,
-        "show": true,
-        "sort": null,
-        "sortDesc": null,
-        "values": true
-      },
-      "legendType": "Right side",
-      "links": [],
-      "maxDataPoints": 3,
-      "nullPointMode": "connected",
-      "pieType": "pie",
-      "strokeWidth": 1,
-      "targets": [
-        {
-          "alias": "$tag_http_status_code",
-          "dsType": "prometheus",
-          "expr": "sum(application_httprequests_errors{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\"})",
-          "groupBy": [
-            {
-              "params": [
-                "http_status_code"
+              "intervalFactor": 2,
+              "legendFormat": "{{job}}/{{endpoint}}/{{method}}}",
+              "measurement": "application.httprequests__transactions_per_endpoint",
+              "policy": "default",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "rate1m"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "last"
+                  }
+                ]
               ],
-              "type": "tag"
+              "step": 2,
+              "tags": [
+                {
+                  "key": "env",
+                  "operator": "=~",
+                  "value": "/^$job$/"
+                },
+                {
+                  "condition": "AND",
+                  "key": "endpoint",
+                  "operator": "=~",
+                  "value": "/^$endpoint$/"
+                }
+              ]
             }
           ],
-          "intervalFactor": 2,
-          "legendFormat": "{{http_status_code}}",
-          "measurement": "application.httprequests__errors",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "sum"
-              }
-            ]
-          ],
-          "step": 240,
-          "tags": [
-            {
-              "key": "endpoint",
-              "operator": "=~",
-              "value": "/^$endpoint$/"
-            },
-            {
-              "condition": "AND",
-              "key": "env",
-              "operator": "=~",
-              "value": "/^$job$/"
-            }
-          ]
+          "title": "Throughput / Endpoint",
+          "transform": "timeseries_aggregations",
+          "type": "table"
         }
       ],
-      "title": "Errors",
-      "type": "grafana-piechart-panel",
-      "valueName": "current"
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "$datasource",
-      "decimals": 2,
-      "editable": true,
-      "error": false,
-      "fill": 1,
-      "gridPos": {
-        "h": 7,
-        "w": 10,
-        "x": 14,
-        "y": 17
-      },
-      "height": "250px",
-      "id": 3,
-      "interval": "$summarize",
-      "legend": {
-        "alignAsTable": true,
-        "avg": false,
-        "current": true,
-        "max": false,
-        "min": false,
-        "rightSide": true,
-        "show": true,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "connected",
-      "percentage": false,
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "alias": "$col",
-          "dsType": "prometheus",
-          "expr": "sum(rate(application_httprequests_errors{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\"}[1m]))*60",
-          "groupBy": [
-            {
-              "params": [
-                "$interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "intervalFactor": 2,
-          "legendFormat": "1min rate",
-          "measurement": "application.httprequests__error_rate",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "rate1m"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              },
-              {
-                "params": [
-                  "1min rate"
-                ],
-                "type": "alias"
-              }
-            ],
-            [
-              {
-                "params": [
-                  "rate5m"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              },
-              {
-                "params": [
-                  "5min rate"
-                ],
-                "type": "alias"
-              }
-            ],
-            [
-              {
-                "params": [
-                  "rate15m"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              },
-              {
-                "params": [
-                  "15min rate"
-                ],
-                "type": "alias"
-              }
-            ]
-          ],
-          "step": 10,
-          "tags": [
-            {
-              "key": "endpoint",
-              "operator": "=~",
-              "value": "/^$endpoint$/"
-            },
-            {
-              "condition": "AND",
-              "key": "env",
-              "operator": "=~",
-              "value": "/^$job$/"
-            }
-          ]
-        },
-        {
-          "expr": "sum(rate(application_httprequests_errors{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\"}[5m]))*60",
-          "intervalFactor": 2,
-          "legendFormat": "5min rate",
-          "refId": "B",
-          "step": 10
-        },
-        {
-          "expr": "sum(rate(application_httprequests_errors{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\"}[15m]))*60",
-          "intervalFactor": 2,
-          "legendFormat": "15min rate",
-          "refId": "C",
-          "step": 10
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Error Rate",
-      "tooltip": {
-        "msResolution": false,
-        "shared": true,
-        "sort": 2,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "rpm",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
+      "repeat": null,
+      "title": "Endpoints",
+      "type": "row"
     },
     {
       "collapsed": false,
@@ -1390,570 +2040,41 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 24
+        "y": 2
       },
-      "id": 19,
+      "id": 21,
       "panels": [],
-      "repeat": null,
-      "title": "Endpoints",
+      "title": "Information",
       "type": "row"
     },
     {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "$datasource",
-      "editable": true,
-      "error": false,
-      "fill": 1,
-      "gridPos": {
-        "h": 9,
-        "w": 12,
-        "x": 0,
-        "y": 25
-      },
-      "height": "350",
-      "id": 16,
-      "interval": "$summarize",
-      "legend": {
-        "alignAsTable": true,
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "rightSide": true,
-        "show": true,
-        "sort": "current",
-        "sortDesc": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "connected",
-      "percentage": false,
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": true,
-      "steppedLine": false,
-      "targets": [
-        {
-          "alias": "$tag_route",
-          "dsType": "prometheus",
-          "expr": "topk(4, rate(request_latency_seconds_count{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\"}[1m])*60)",
-          "groupBy": [
-            {
-              "params": [
-                "$interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "route"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "intervalFactor": 2,
-          "legendFormat": "{{job}}/{{endpoint}}/{{method}}",
-          "measurement": "application.httprequests__transactions_per_endpoint",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "rate1m"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              }
-            ]
-          ],
-          "step": 10,
-          "tags": [
-            {
-              "key": "env",
-              "operator": "=~",
-              "value": "/^$job$/"
-            },
-            {
-              "condition": "AND",
-              "key": "endpoint",
-              "operator": "=~",
-              "value": "/^$endpoint$/"
-            }
-          ]
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Throughput / Endpoint",
-      "tooltip": {
-        "msResolution": false,
-        "shared": true,
-        "sort": 2,
-        "value_type": "individual"
-      },
-      "transparent": false,
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "rpm",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "$datasource",
-      "editable": true,
-      "error": false,
-      "fill": 1,
-      "gridPos": {
-        "h": 9,
-        "w": 12,
-        "x": 12,
-        "y": 25
-      },
-      "height": "350",
-      "id": 17,
-      "interval": "$summarize",
-      "legend": {
-        "alignAsTable": true,
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "rightSide": true,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "connected",
-      "percentage": false,
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "alias": "$tag_route",
-          "dsType": "prometheus",
-          "expr": "topk(4,request_latency_seconds_bucket{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\",le=\"1.0\"})",
-          "groupBy": [
-            {
-              "params": [
-                "$interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "route"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "intervalFactor": 2,
-          "legendFormat": "{{job}}/{{endpoint}}/{{method}}",
-          "measurement": "application.httprequests__transactions_per_endpoint",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "p95"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              },
-              {
-                "params": [
-                  "95th Percentile"
-                ],
-                "type": "alias"
-              }
-            ]
-          ],
-          "step": 10,
-          "tags": [
-            {
-              "key": "env",
-              "operator": "=~",
-              "value": "/^$job$/"
-            },
-            {
-              "condition": "AND",
-              "key": "endpoint",
-              "operator": "=~",
-              "value": "/^$endpoint$/"
-            }
-          ]
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Response Time / Endpoint",
-      "tooltip": {
-        "msResolution": false,
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "ms",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "columns": [
-        {
-          "text": "Current",
-          "value": "current"
-        }
-      ],
-      "datasource": "$datasource",
-      "editable": true,
-      "error": false,
-      "filterNull": false,
+      "columns": [],
+      "datasource": "gasb",
       "fontSize": "100%",
       "gridPos": {
-        "h": 8,
-        "w": 8,
-        "x": 0,
-        "y": 34
+        "h": 9,
+        "w": 21,
+        "x": 2,
+        "y": 3
       },
-      "id": 10,
-      "interval": "",
+      "id": 23,
       "links": [],
       "pageSize": null,
       "scroll": true,
       "showHeader": true,
       "sort": {
-        "col": 1,
-        "desc": true
-      },
-      "styles": [
-        {
-          "dateFormat": "YYYY-MM-DD HH:mm:ss",
-          "pattern": "Time",
-          "type": "date"
-        },
-        {
-          "colorMode": null,
-          "colors": [
-            "rgba(245, 54, 54, 0.9)",
-            "rgba(237, 129, 40, 0.89)",
-            "rgba(50, 172, 45, 0.97)"
-          ],
-          "decimals": 2,
-          "pattern": "/.*/",
-          "thresholds": [],
-          "type": "number",
-          "unit": "ms"
-        }
-      ],
-      "targets": [
-        {
-          "alias": "$tag_route",
-          "dsType": "prometheus",
-          "expr": "request_latency_seconds_bucket{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\",le=\"1.0\"}",
-          "groupBy": [
-            {
-              "params": [
-                "$interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "route"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "intervalFactor": 2,
-          "legendFormat": "{{job}}/{{endpoint}}/{{method}}",
-          "measurement": "application.httprequests__transactions_per_endpoint",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "p95"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              }
-            ]
-          ],
-          "step": 2,
-          "tags": [
-            {
-              "key": "env",
-              "operator": "=~",
-              "value": "/^$job$/"
-            },
-            {
-              "condition": "AND",
-              "key": "endpoint",
-              "operator": "=~",
-              "value": "/^$endpoint$/"
-            }
-          ]
-        }
-      ],
-      "title": "Response Times / Endpoint",
-      "transform": "timeseries_aggregations",
-      "type": "table"
-    },
-    {
-      "columns": [
-        {
-          "text": "Current",
-          "value": "current"
-        }
-      ],
-      "datasource": "$datasource",
-      "editable": true,
-      "error": false,
-      "filterNull": false,
-      "fontSize": "100%",
-      "gridPos": {
-        "h": 8,
-        "w": 8,
-        "x": 8,
-        "y": 34
-      },
-      "id": 11,
-      "interval": "",
-      "links": [],
-      "pageSize": null,
-      "scroll": true,
-      "showHeader": true,
-      "sort": {
-        "col": null,
+        "col": 7,
         "desc": false
       },
       "styles": [
         {
+          "alias": "Time",
           "dateFormat": "YYYY-MM-DD HH:mm:ss",
           "pattern": "Time",
           "type": "date"
         },
         {
-          "colorMode": null,
-          "colors": [
-            "rgba(245, 54, 54, 0.9)",
-            "rgba(237, 129, 40, 0.89)",
-            "rgba(50, 172, 45, 0.97)"
-          ],
-          "decimals": 0,
-          "pattern": "/.*/",
-          "thresholds": [],
-          "type": "number",
-          "unit": "percent"
-        }
-      ],
-      "targets": [
-        {
-          "alias": "$tag_route",
-          "dsType": "prometheus",
-          "expr": " rate(application_httprequests_errors{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\"}[1m])/rate(application_httprequests_transactions_count{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\"}[1m])*100",
-          "groupBy": [
-            {
-              "params": [
-                "$interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "route"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "intervalFactor": 2,
-          "legendFormat": "{{job}}/{{endpoint}}/{{method}}}",
-          "measurement": "application.httprequests__one_minute_error_percentage_rate_per_endpoint",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              }
-            ]
-          ],
-          "step": 2,
-          "tags": [
-            {
-              "key": "endpoint",
-              "operator": "=~",
-              "value": "/^$endpoint$/"
-            },
-            {
-              "condition": "AND",
-              "key": "env",
-              "operator": "=~",
-              "value": "/^$job$/"
-            }
-          ]
-        }
-      ],
-      "title": "Error Request Percentage / Endpoint",
-      "transform": "timeseries_aggregations",
-      "type": "table"
-    },
-    {
-      "columns": [
-        {
-          "text": "Current",
-          "value": "current"
-        }
-      ],
-      "datasource": "$datasource",
-      "editable": true,
-      "error": false,
-      "filterNull": false,
-      "fontSize": "100%",
-      "gridPos": {
-        "h": 8,
-        "w": 8,
-        "x": 16,
-        "y": 34
-      },
-      "id": 12,
-      "interval": "",
-      "links": [],
-      "pageSize": null,
-      "scroll": true,
-      "showHeader": true,
-      "sort": {
-        "col": 1,
-        "desc": true
-      },
-      "styles": [
-        {
-          "dateFormat": "YYYY-MM-DD HH:mm:ss",
-          "pattern": "Time",
-          "type": "date"
-        },
-        {
+          "alias": "",
           "colorMode": null,
           "colors": [
             "rgba(245, 54, 54, 0.9)",
@@ -1964,72 +2085,19 @@
           "pattern": "/.*/",
           "thresholds": [],
           "type": "number",
-          "unit": "rpm"
+          "unit": "short"
         }
       ],
       "targets": [
         {
-          "alias": "$tag_route",
-          "dsType": "prometheus",
-          "expr": "rate(request_latency_seconds_count{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\"}[1m])*60",
-          "groupBy": [
-            {
-              "params": [
-                "$interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "route"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "intervalFactor": 2,
-          "legendFormat": "{{job}}/{{endpoint}}/{{method}}}",
-          "measurement": "application.httprequests__transactions_per_endpoint",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "rate1m"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              }
-            ]
-          ],
-          "step": 2,
-          "tags": [
-            {
-              "key": "env",
-              "operator": "=~",
-              "value": "/^$job$/"
-            },
-            {
-              "condition": "AND",
-              "key": "endpoint",
-              "operator": "=~",
-              "value": "/^$endpoint$/"
-            }
-          ]
+          "alias": "",
+          "format": "table",
+          "rawSql": "SELECT profycenter.profycenter as profycenter, employees_input_device.uid as uid, ADDTIME(date_input, '03:00:00')  as date, fio, post, unit, ou, version\nFROM  profycenter, employees, employees_input_device\nINNER JOIN \n(SELECT uid, MAX(date_input) as TopDate \nFROM employees_input_device\nWHERE Type = '1' \nGROUP BY uid) AS EachItem ON \n    EachItem.TopDate =  employees_input_device.date_input\n    AND EachItem.uid =  employees_input_device.uid\nwhere \nprofycenter.ldap= employees.unit and\nemployees_input_device.id_obj = employees.id_obj  and \nversion != \"\"  and  unit != \"28\" and unit != \"25\" group   by uid \n\n",
+          "refId": "A"
         }
       ],
-      "title": "Throughput / Endpoint",
-      "transform": "timeseries_aggregations",
+      "title": "Информация об устройствах",
+      "transform": "table",
       "type": "table"
     }
   ],
@@ -2262,6 +2330,6 @@
   },
   "timezone": "browser",
   "title": "App Metrics - Web Monitoring - Prometheus",
-  "uid": "bEn1jyImk",
+  "uid": "ngoGCsIik",
   "version": 1
 }
