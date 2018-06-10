@@ -2,7 +2,7 @@
     "annotations": {
         "list": []
     },
-    "description": "Dashboard to visualize metrics captured by App Metrics ASP.NET Core Middleware -https://github.com/alhardy/AppMetrics",
+    "description": "Dashboard to visualize metrics captured by Python prometheus client ",
     "editable": true,
     "gnetId": 2204,
     "graphTooltip": 1,
@@ -73,7 +73,7 @@
                     "targets": [
                         {
                             "dsType": "prometheus",
-                            "expr": "rate(application_httprequests_transactions_count{env=\"$environment\",app=\"$application\",server=\"$server\"}[1m])*60",
+                            "expr": "sum(rate(application_httprequests_transactions_count{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\"}[1m]))*60",
                             "groupBy": [
                                 {
                                     "params": [
@@ -111,15 +111,15 @@
                             "step": 2,
                             "tags": [
                                 {
-                                    "key": "app",
+                                    "key": "endpoint",
                                     "operator": "=~",
-                                    "value": "/^$application$/"
+                                    "value": "/^$endpoint$/"
                                 },
                                 {
                                     "condition": "AND",
                                     "key": "env",
                                     "operator": "=~",
-                                    "value": "/^$environment$/"
+                                    "value": "/^$job$/"
                                 }
                             ]
                         }
@@ -196,7 +196,7 @@
                     "targets": [
                         {
                             "dsType": "prometheus",
-                            "expr": "application_httprequests_one_minute_error_percentage_rate{env=\"$environment\",app=\"$application\",server=\"$server\"}",
+                            "expr": "sum(rate(application_httprequests_errors{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\"}[5m]))/sum(rate(application_httprequests_transactions_count{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\"}[5m]))*100",
                             "groupBy": [],
                             "intervalFactor": 2,
                             "measurement": "application.httprequests__one_minute_error_percentage_rate",
@@ -220,13 +220,13 @@
                                 {
                                     "key": "env",
                                     "operator": "=~",
-                                    "value": "/^$environment$/"
+                                    "value": "/^$job$/"
                                 },
                                 {
                                     "condition": "AND",
-                                    "key": "app",
+                                    "key": "endpoint",
                                     "operator": "=~",
-                                    "value": "/^$application$/"
+                                    "value": "/^$endpoint$/"
                                 }
                             ]
                         }
@@ -278,7 +278,7 @@
                         {
                             "alias": "",
                             "dsType": "prometheus",
-                            "expr": "application_httprequests_active{env=\"$environment\",app=\"$application\",server=\"$server\"}",
+                            "expr": "sum(application_httprequests_active{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\", method=~\"$method\"})",
                             "groupBy": [
                                 {
                                     "params": [
@@ -317,13 +317,13 @@
                                 {
                                     "key": "env",
                                     "operator": "=~",
-                                    "value": "/^$environment$/"
+                                    "value": "/^$job$/"
                                 },
                                 {
                                     "condition": "AND",
-                                    "key": "app",
+                                    "key": "endpoint",
                                     "operator": "=~",
-                                    "value": "/^$application$/"
+                                    "value": "/^$endpoint$/"
                                 }
                             ]
                         }
@@ -400,7 +400,7 @@
                     "targets": [
                         {
                             "dsType": "prometheus",
-                            "expr": "application_httprequests_apdex{env=\"stage\",app=\"$application\",server=\"$server\"}",
+                            "expr": "rate(request_latency_seconds_sum{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\" ,method=~\"$method\"}[5m])/rate(request_latency_seconds_count{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\"}[5m])",
                             "groupBy": [
                                 {
                                     "params": [
@@ -438,15 +438,15 @@
                             "step": 10,
                             "tags": [
                                 {
-                                    "key": "app",
+                                    "key": "endpoint",
                                     "operator": "=~",
-                                    "value": "/^$application$/"
+                                    "value": "/^$endpoint$/"
                                 },
                                 {
                                     "condition": "AND",
                                     "key": "env",
                                     "operator": "=~",
-                                    "value": "/^$environment$/"
+                                    "value": "/^$job$/"
                                 }
                             ]
                         }
@@ -544,7 +544,7 @@
                         {
                             "alias": "$col",
                             "dsType": "prometheus",
-                            "expr": "rate(application_httprequests_transactions_count{env=\"$environment\",app=\"$application\",server=\"$server\"}[1m])*60",
+                            "expr": "sum(rate(application_httprequests_transactions_count{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\"}[1m]))*60",
                             "groupBy": [
                                 {
                                     "params": [
@@ -626,25 +626,25 @@
                                 {
                                     "key": "env",
                                     "operator": "=~",
-                                    "value": "/^$environment$/"
+                                    "value": "/^$job$/"
                                 },
                                 {
                                     "condition": "AND",
-                                    "key": "app",
+                                    "key": "endpoint",
                                     "operator": "=~",
-                                    "value": "/^$application$/"
+                                    "value": "/^$endpoint$/"
                                 }
                             ]
                         },
                         {
-                            "expr": "rate(application_httprequests_transactions_count{env=\"$environment\",app=\"$application\",server=\"$server\"}[5m])*60",
+                            "expr": "sum(rate(application_httprequests_transactions_count{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\"}[5m]))*60",
                             "intervalFactor": 2,
                             "legendFormat": "5 min rate",
                             "refId": "B",
                             "step": 10
                         },
                         {
-                            "expr": "rate(application_httprequests_transactions_count{env=\"$environment\",app=\"$application\",server=\"$server\"}[15m])*60",
+                            "expr": "sum(rate(application_httprequests_transactions_count{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\"}[15m]))*60",
                             "intervalFactor": 2,
                             "legendFormat": "15 min rate",
                             "refId": "C",
@@ -724,7 +724,7 @@
                         {
                             "alias": "$col",
                             "dsType": "prometheus",
-                            "expr": "application_httprequests_transactions{env=\"$environment\",app=\"$application\",server=\"$server\",quantile=\"0.75\"}",
+                            "expr": "sum(histogram_quantile(0.5, sum without(instance, endpoint, method, job) (rate(request_latency_seconds_bucket{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\"}[5m]))))",
                             "groupBy": [
                                 {
                                     "params": [
@@ -740,7 +740,7 @@
                                 }
                             ],
                             "intervalFactor": 2,
-                            "legendFormat": "75th Percentile",
+                            "legendFormat": "50th Percentile",
                             "measurement": "application.httprequests__transactions",
                             "metric": "",
                             "policy": "default",
@@ -807,28 +807,42 @@
                                 {
                                     "key": "env",
                                     "operator": "=~",
-                                    "value": "/^$environment$/"
+                                    "value": "/^$job$/"
                                 },
                                 {
                                     "condition": "AND",
-                                    "key": "app",
+                                    "key": "endpoint",
                                     "operator": "=~",
-                                    "value": "/^$application$/"
+                                    "value": "/^$endpoint$/"
                                 }
                             ]
                         },
                         {
-                            "expr": "application_httprequests_transactions{env=\"$environment\",app=\"$application\",server=\"$server\",quantile=\"0.95\"}",
+                            "expr": "sum(histogram_quantile(0.95, sum without(instance, endpoint, method, job) (rate(request_latency_seconds_bucket{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\"}[5m]))))",
                             "intervalFactor": 2,
                             "legendFormat": "95th Percentile",
                             "refId": "B",
                             "step": 10
                         },
                         {
-                            "expr": "application_httprequests_transactions{env=\"$environment\",app=\"$application\",server=\"$server\",quantile=\"0.99\"}",
+                            "expr": "sum(histogram_quantile(0.99, sum without(instance, endpoint, method, job) (rate(request_latency_seconds_bucket{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\"}[5m]))))",
                             "intervalFactor": 2,
                             "legendFormat": "99th Percentile",
                             "refId": "C",
+                            "step": 10
+                        },
+                        {
+                            "expr": "sum(histogram_quantile(1, sum without(instance, endpoint, method, job) (rate(request_latency_seconds_bucket{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\"}[5m]))))",
+                            "intervalFactor": 2,
+                            "legendFormat": "Max",
+                            "refId": "D",
+                            "step": 10
+                        },
+                        {
+                            "expr": "sum(histogram_quantile(1e-9, sum without(instance, endpoint, method, job) (rate(request_latency_seconds_bucket{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\"}[5m]))))",
+                            "intervalFactor": 2,
+                            "legendFormat": "Min",
+                            "refId": "E",
                             "step": 10
                         }
                     ],
@@ -905,7 +919,7 @@
                         {
                             "alias": "",
                             "dsType": "prometheus",
-                            "expr": "application_httprequests_one_minute_error_percentage_rate{env=\"$environment\",app=\"$application\",server=\"$server\"}",
+                            "expr": "rate(application_httprequests_errors{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\"}[1m])/rate(application_httprequests_transactions_count{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\"}[1m])*100",
                             "groupBy": [
                                 {
                                     "params": [
@@ -942,15 +956,15 @@
                             "step": 10,
                             "tags": [
                                 {
-                                    "key": "app",
+                                    "key": "endpoint",
                                     "operator": "=~",
-                                    "value": "/^$application$/"
+                                    "value": "/^$endpoint$/"
                                 },
                                 {
                                     "condition": "AND",
                                     "key": "env",
                                     "operator": "=~",
-                                    "value": "/^$environment$/"
+                                    "value": "/^$job$/"
                                 }
                             ]
                         }
@@ -1024,7 +1038,7 @@
                         {
                             "alias": "$tag_http_status_code",
                             "dsType": "prometheus",
-                            "expr": "application_httprequests_errors{env=\"$environment\",app=\"$application\",server=\"$server\"}",
+                            "expr": "sum(application_httprequests_errors{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\"})",
                             "groupBy": [
                                 {
                                     "params": [
@@ -1056,15 +1070,15 @@
                             "step": 240,
                             "tags": [
                                 {
-                                    "key": "app",
+                                    "key": "endpoint",
                                     "operator": "=~",
-                                    "value": "/^$application$/"
+                                    "value": "/^$endpoint$/"
                                 },
                                 {
                                     "condition": "AND",
                                     "key": "env",
                                     "operator": "=~",
-                                    "value": "/^$environment$/"
+                                    "value": "/^$job$/"
                                 }
                             ]
                         }
@@ -1111,7 +1125,7 @@
                         {
                             "alias": "$col",
                             "dsType": "prometheus",
-                            "expr": "rate(application_httprequests_error_rate_total[1m])*60",
+                            "expr": "sum(rate(application_httprequests_errors{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\"}[1m]))*60",
                             "groupBy": [
                                 {
                                     "params": [
@@ -1191,27 +1205,27 @@
                             "step": 10,
                             "tags": [
                                 {
-                                    "key": "app",
+                                    "key": "endpoint",
                                     "operator": "=~",
-                                    "value": "/^$application$/"
+                                    "value": "/^$endpoint$/"
                                 },
                                 {
                                     "condition": "AND",
                                     "key": "env",
                                     "operator": "=~",
-                                    "value": "/^$environment$/"
+                                    "value": "/^$job$/"
                                 }
                             ]
                         },
                         {
-                            "expr": "rate(application_httprequests_error_rate_total[5m])*60",
+                            "expr": "sum(rate(application_httprequests_errors{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\"}[5m]))*60",
                             "intervalFactor": 2,
                             "legendFormat": "5min rate",
                             "refId": "B",
                             "step": 10
                         },
                         {
-                            "expr": "rate(application_httprequests_error_rate_total[15m])*60",
+                            "expr": "sum(rate(application_httprequests_errors{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\"}[15m]))*60",
                             "intervalFactor": 2,
                             "legendFormat": "15min rate",
                             "refId": "C",
@@ -1305,7 +1319,7 @@
                         {
                             "alias": "$tag_route",
                             "dsType": "prometheus",
-                            "expr": "rate(application_httprequests_transactions_per_endpoint_count{env=\"$environment\",app=\"$application\",server=\"$server\"}[1m])*60",
+                            "expr": "topk(4, rate(request_latency_seconds_count{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\"}[1m])*60)",
                             "groupBy": [
                                 {
                                     "params": [
@@ -1327,7 +1341,7 @@
                                 }
                             ],
                             "intervalFactor": 2,
-                            "legendFormat": "{{route}}",
+                            "legendFormat": "{{job}}/{{endpoint}}/{{method}}",
                             "measurement": "application.httprequests__transactions_per_endpoint",
                             "policy": "default",
                             "refId": "A",
@@ -1351,13 +1365,13 @@
                                 {
                                     "key": "env",
                                     "operator": "=~",
-                                    "value": "/^$environment$/"
+                                    "value": "/^$job$/"
                                 },
                                 {
                                     "condition": "AND",
-                                    "key": "app",
+                                    "key": "endpoint",
                                     "operator": "=~",
-                                    "value": "/^$application$/"
+                                    "value": "/^$endpoint$/"
                                 }
                             ]
                         }
@@ -1436,7 +1450,7 @@
                         {
                             "alias": "$tag_route",
                             "dsType": "prometheus",
-                            "expr": "application_httprequests_transactions_per_endpoint{env=\"$environment\",app=\"$application\",server=\"$server\",quantile=\"0.95\"}",
+                            "expr": "topk(4,request_latency_seconds_bucket{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\",le=\"1.0\"})",
                             "groupBy": [
                                 {
                                     "params": [
@@ -1458,7 +1472,7 @@
                                 }
                             ],
                             "intervalFactor": 2,
-                            "legendFormat": "{{route}}",
+                            "legendFormat": "{{job}}/{{endpoint}}/{{method}}",
                             "measurement": "application.httprequests__transactions_per_endpoint",
                             "policy": "default",
                             "refId": "A",
@@ -1488,13 +1502,13 @@
                                 {
                                     "key": "env",
                                     "operator": "=~",
-                                    "value": "/^$environment$/"
+                                    "value": "/^$job$/"
                                 },
                                 {
                                     "condition": "AND",
-                                    "key": "app",
+                                    "key": "endpoint",
                                     "operator": "=~",
-                                    "value": "/^$application$/"
+                                    "value": "/^$endpoint$/"
                                 }
                             ]
                         }
@@ -1582,7 +1596,7 @@
                         {
                             "alias": "$tag_route",
                             "dsType": "prometheus",
-                            "expr": "application_httprequests_transactions_per_endpoint{env=\"$environment\",app=\"$application\",server=\"$server\",quantile=\"0.95\"}",
+                            "expr": "request_latency_seconds_bucket{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\",le=\"1.0\"}",
                             "groupBy": [
                                 {
                                     "params": [
@@ -1604,7 +1618,7 @@
                                 }
                             ],
                             "intervalFactor": 2,
-                            "legendFormat": "{{route}}",
+                            "legendFormat": "{{job}}/{{endpoint}}/{{method}}",
                             "measurement": "application.httprequests__transactions_per_endpoint",
                             "policy": "default",
                             "refId": "A",
@@ -1628,13 +1642,13 @@
                                 {
                                     "key": "env",
                                     "operator": "=~",
-                                    "value": "/^$environment$/"
+                                    "value": "/^$job$/"
                                 },
                                 {
                                     "condition": "AND",
-                                    "key": "app",
+                                    "key": "endpoint",
                                     "operator": "=~",
-                                    "value": "/^$application$/"
+                                    "value": "/^$endpoint$/"
                                 }
                             ]
                         }
@@ -1690,7 +1704,7 @@
                         {
                             "alias": "$tag_route",
                             "dsType": "prometheus",
-                            "expr": "application_httprequests_one_minute_error_percentage_rate_per_endpoint{env=\"$environment\",app=\"$application\",server=\"$server\"}",
+                            "expr": " rate(application_httprequests_errors{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\"}[1m])/rate(application_httprequests_transactions_count{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\"}[1m])*100",
                             "groupBy": [
                                 {
                                     "params": [
@@ -1712,7 +1726,7 @@
                                 }
                             ],
                             "intervalFactor": 2,
-                            "legendFormat": "{{route}}",
+                            "legendFormat": "{{job}}/{{endpoint}}/{{method}}}",
                             "measurement": "application.httprequests__one_minute_error_percentage_rate_per_endpoint",
                             "policy": "default",
                             "refId": "A",
@@ -1734,15 +1748,15 @@
                             "step": 2,
                             "tags": [
                                 {
-                                    "key": "app",
+                                    "key": "endpoint",
                                     "operator": "=~",
-                                    "value": "/^$application$/"
+                                    "value": "/^$endpoint$/"
                                 },
                                 {
                                     "condition": "AND",
                                     "key": "env",
                                     "operator": "=~",
-                                    "value": "/^$environment$/"
+                                    "value": "/^$job$/"
                                 }
                             ]
                         }
@@ -1798,7 +1812,7 @@
                         {
                             "alias": "$tag_route",
                             "dsType": "prometheus",
-                            "expr": "rate(application_httprequests_transactions_per_endpoint_count{env=\"$environment\",app=\"$application\",server=\"$server\"}[1m])*60",
+                            "expr": "rate(request_latency_seconds_count{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\"}[1m])*60",
                             "groupBy": [
                                 {
                                     "params": [
@@ -1820,7 +1834,7 @@
                                 }
                             ],
                             "intervalFactor": 2,
-                            "legendFormat": "{{route}}",
+                            "legendFormat": "{{job}}/{{endpoint}}/{{method}}}",
                             "measurement": "application.httprequests__transactions_per_endpoint",
                             "policy": "default",
                             "refId": "A",
@@ -1844,13 +1858,13 @@
                                 {
                                     "key": "env",
                                     "operator": "=~",
-                                    "value": "/^$environment$/"
+                                    "value": "/^$job$/"
                                 },
                                 {
                                     "condition": "AND",
-                                    "key": "app",
+                                    "key": "endpoint",
                                     "operator": "=~",
-                                    "value": "/^$application$/"
+                                    "value": "/^$endpoint$/"
                                 }
                             ]
                         }
@@ -1866,689 +1880,6 @@
             "showTitle": true,
             "title": "Endpoints",
             "titleSize": "h6"
-        },
-        {
-            "collapse": false,
-            "height": "250",
-            "panels": [
-                {
-                    "columns": [
-                        {
-                            "text": "Current",
-                            "value": "current"
-                        }
-                    ],
-                    "datasource": "$datasource",
-                    "editable": true,
-                    "error": false,
-                    "filterNull": false,
-                    "fontSize": "100%",
-                    "hideTimeOverride": true,
-                    "id": 22,
-                    "interval": "",
-                    "links": [],
-                    "pageSize": null,
-                    "scroll": true,
-                    "showHeader": true,
-                    "sort": {
-                        "col": 0,
-                        "desc": true
-                    },
-                    "span": 9,
-                    "styles": [
-                        {
-                            "dateFormat": "YYYY-MM-DD HH:mm:ss",
-                            "pattern": "Time",
-                            "type": "date"
-                        },
-                        {
-                            "colorMode": "row",
-                            "colors": [
-                                "rgba(245, 54, 54, 0.9)",
-                                "rgba(237, 129, 40, 0.89)",
-                                "rgba(50, 172, 45, 0.97)"
-                            ],
-                            "decimals": 1,
-                            "pattern": "/.*/",
-                            "thresholds": [
-                                "0.5",
-                                "1"
-                            ],
-                            "type": "number",
-                            "unit": "short"
-                        }
-                    ],
-                    "targets": [
-                        {
-                            "alias": "$tag_health_check_name",
-                            "dsType": "prometheus",
-                            "expr": "application_health_results{env=\"stage\",app=\"$application\",server=\"$server\"}",
-                            "groupBy": [
-                                {
-                                    "params": [
-                                        "$interval"
-                                    ],
-                                    "type": "time"
-                                },
-                                {
-                                    "params": [
-                                        "health_check_name"
-                                    ],
-                                    "type": "tag"
-                                },
-                                {
-                                    "params": [
-                                        "null"
-                                    ],
-                                    "type": "fill"
-                                }
-                            ],
-                            "intervalFactor": 2,
-                            "legendFormat": "{{health_check_name}}",
-                            "measurement": "application.health__results",
-                            "metric": "application_health_results",
-                            "policy": "default",
-                            "refId": "A",
-                            "resultFormat": "time_series",
-                            "select": [
-                                [
-                                    {
-                                        "params": [
-                                            "value"
-                                        ],
-                                        "type": "field"
-                                    },
-                                    {
-                                        "params": [],
-                                        "type": "last"
-                                    }
-                                ]
-                            ],
-                            "step": 2,
-                            "tags": [
-                                {
-                                    "key": "env",
-                                    "operator": "=~",
-                                    "value": "/^$environment$/"
-                                },
-                                {
-                                    "condition": "AND",
-                                    "key": "app",
-                                    "operator": "=~",
-                                    "value": "/^$application$/"
-                                }
-                            ]
-                        }
-                    ],
-                    "timeFrom": null,
-                    "title": "Results",
-                    "transform": "timeseries_aggregations",
-                    "transparent": true,
-                    "type": "table"
-                },
-                {
-                    "cacheTimeout": null,
-                    "colorBackground": true,
-                    "colorValue": false,
-                    "colors": [
-                        "rgba(245, 54, 54, 0.9)",
-                        "rgba(237, 129, 40, 0.89)",
-                        "rgba(50, 172, 45, 0.97)"
-                    ],
-                    "datasource": "$datasource",
-                    "editable": true,
-                    "error": false,
-                    "format": "none",
-                    "gauge": {
-                        "maxValue": 100,
-                        "minValue": 0,
-                        "show": false,
-                        "thresholdLabels": false,
-                        "thresholdMarkers": true
-                    },
-                    "hideTimeOverride": true,
-                    "id": 19,
-                    "interval": null,
-                    "links": [
-                        {
-                            "type": "dashboard"
-                        }
-                    ],
-                    "mappingType": 2,
-                    "mappingTypes": [
-                        {
-                            "name": "value to text",
-                            "value": 1
-                        },
-                        {
-                            "name": "range to text",
-                            "value": 2
-                        }
-                    ],
-                    "maxDataPoints": 100,
-                    "nullPointMode": "connected",
-                    "nullText": null,
-                    "postfix": "",
-                    "postfixFontSize": "50%",
-                    "prefix": "",
-                    "prefixFontSize": "50%",
-                    "rangeMaps": [
-                        {
-                            "from": "0",
-                            "text": "Unhealthy",
-                            "to": "0.49"
-                        },
-                        {
-                            "from": "0.5",
-                            "text": "Degraded",
-                            "to": "0.9"
-                        },
-                        {
-                            "from": "1.0",
-                            "text": "Healthy",
-                            "to": "2.0"
-                        }
-                    ],
-                    "span": 3,
-                    "sparkline": {
-                        "fillColor": "rgba(31, 118, 189, 0.18)",
-                        "full": false,
-                        "lineColor": "rgb(31, 120, 193)",
-                        "show": false
-                    },
-                    "targets": [
-                        {
-                            "dsType": "prometheus",
-                            "expr": "application_health_score{env=\"stage\",app=\"$application\",server=\"$server\"}",
-                            "groupBy": [
-                                {
-                                    "params": [
-                                        "$interval"
-                                    ],
-                                    "type": "time"
-                                },
-                                {
-                                    "params": [
-                                        "null"
-                                    ],
-                                    "type": "fill"
-                                }
-                            ],
-                            "intervalFactor": 2,
-                            "measurement": "application.health__score",
-                            "metric": "application_health_score",
-                            "policy": "default",
-                            "refId": "A",
-                            "resultFormat": "time_series",
-                            "select": [
-                                [
-                                    {
-                                        "params": [
-                                            "value"
-                                        ],
-                                        "type": "field"
-                                    },
-                                    {
-                                        "params": [],
-                                        "type": "last"
-                                    }
-                                ]
-                            ],
-                            "step": 4,
-                            "tags": [
-                                {
-                                    "key": "env",
-                                    "operator": "=~",
-                                    "value": "/^$environment$/"
-                                },
-                                {
-                                    "condition": "AND",
-                                    "key": "app",
-                                    "operator": "=~",
-                                    "value": "/^$application$/"
-                                }
-                            ]
-                        }
-                    ],
-                    "thresholds": "0.5,1",
-                    "timeFrom": null,
-                    "title": "",
-                    "transparent": true,
-                    "type": "singlestat",
-                    "valueFontSize": "80%",
-                    "valueMaps": [
-                        {
-                            "op": "=",
-                            "text": "Unhealthy",
-                            "value": "0"
-                        },
-                        {
-                            "op": "=",
-                            "text": "Degraded",
-                            "value": "0.5"
-                        },
-                        {
-                            "op": "=",
-                            "text": "Healthy",
-                            "value": "1.0"
-                        }
-                    ],
-                    "valueName": "current"
-                }
-            ],
-            "repeat": null,
-            "repeatIteration": null,
-            "repeatRowId": null,
-            "showTitle": true,
-            "title": "Health",
-            "titleSize": "h6"
-        },
-        {
-            "collapse": false,
-            "height": "300",
-            "panels": [
-                {
-                    "aliasColors": {},
-                    "bars": false,
-                    "datasource": "$datasource",
-                    "editable": true,
-                    "error": false,
-                    "fill": 1,
-                    "id": 14,
-                    "interval": "$summarize",
-                    "legend": {
-                        "alignAsTable": true,
-                        "avg": false,
-                        "current": true,
-                        "hideEmpty": false,
-                        "max": false,
-                        "min": false,
-                        "rightSide": true,
-                        "show": true,
-                        "total": false,
-                        "values": true
-                    },
-                    "lines": true,
-                    "linewidth": 1,
-                    "links": [],
-                    "nullPointMode": "connected",
-                    "percentage": false,
-                    "pointradius": 5,
-                    "points": false,
-                    "renderer": "flot",
-                    "seriesOverrides": [],
-                    "span": 6,
-                    "stack": false,
-                    "steppedLine": false,
-                    "targets": [
-                        {
-                            "alias": "$col",
-                            "dsType": "prometheus",
-                            "expr": "application_httprequests_post_size{env=\"$environment\",app=\"$application\",server=\"$server\",quantile=\"0.75\"}",
-                            "groupBy": [
-                                {
-                                    "params": [
-                                        "$interval"
-                                    ],
-                                    "type": "time"
-                                },
-                                {
-                                    "params": [
-                                        "null"
-                                    ],
-                                    "type": "fill"
-                                }
-                            ],
-                            "intervalFactor": 2,
-                            "legendFormat": "75th Percentile",
-                            "measurement": "application.httprequests__post_size",
-                            "policy": "default",
-                            "refId": "A",
-                            "resultFormat": "time_series",
-                            "select": [
-                                [
-                                    {
-                                        "params": [
-                                            "p95"
-                                        ],
-                                        "type": "field"
-                                    },
-                                    {
-                                        "params": [],
-                                        "type": "last"
-                                    },
-                                    {
-                                        "params": [
-                                            "95th percentile"
-                                        ],
-                                        "type": "alias"
-                                    }
-                                ],
-                                [
-                                    {
-                                        "params": [
-                                            "p98"
-                                        ],
-                                        "type": "field"
-                                    },
-                                    {
-                                        "params": [],
-                                        "type": "last"
-                                    },
-                                    {
-                                        "params": [
-                                            "98th percentile"
-                                        ],
-                                        "type": "alias"
-                                    }
-                                ],
-                                [
-                                    {
-                                        "params": [
-                                            "p99"
-                                        ],
-                                        "type": "field"
-                                    },
-                                    {
-                                        "params": [],
-                                        "type": "last"
-                                    },
-                                    {
-                                        "params": [
-                                            "99th percentile"
-                                        ],
-                                        "type": "alias"
-                                    }
-                                ],
-                                [
-                                    {
-                                        "params": [
-                                            "last"
-                                        ],
-                                        "type": "field"
-                                    },
-                                    {
-                                        "params": [],
-                                        "type": "median"
-                                    },
-                                    {
-                                        "params": [
-                                            "median"
-                                        ],
-                                        "type": "alias"
-                                    }
-                                ]
-                            ],
-                            "step": 10,
-                            "tags": [
-                                {
-                                    "key": "app",
-                                    "operator": "=~",
-                                    "value": "/^$application$/"
-                                },
-                                {
-                                    "condition": "AND",
-                                    "key": "env",
-                                    "operator": "=~",
-                                    "value": "/^$environment$/"
-                                }
-                            ]
-                        },
-                        {
-                            "expr": "application_httprequests_post_size{env=\"$environment\",app=\"$application\",server=\"$server\",quantile=\"0.95\"}",
-                            "intervalFactor": 2,
-                            "legendFormat": "95th Percentile",
-                            "refId": "B",
-                            "step": 10
-                        },
-                        {
-                            "expr": "application_httprequests_post_size{env=\"$environment\",app=\"$application\",server=\"$server\",quantile=\"0.99\"}",
-                            "intervalFactor": 2,
-                            "legendFormat": "99th Percentile",
-                            "refId": "C",
-                            "step": 10
-                        }
-                    ],
-                    "thresholds": [],
-                    "timeFrom": null,
-                    "timeShift": null,
-                    "title": "Post Request Size",
-                    "tooltip": {
-                        "msResolution": false,
-                        "shared": true,
-                        "sort": 0,
-                        "value_type": "individual"
-                    },
-                    "type": "graph",
-                    "xaxis": {
-                        "mode": "time",
-                        "name": null,
-                        "show": true,
-                        "values": []
-                    },
-                    "yaxes": [
-                        {
-                            "format": "decbytes",
-                            "label": null,
-                            "logBase": 1,
-                            "max": null,
-                            "min": null,
-                            "show": true
-                        },
-                        {
-                            "format": "short",
-                            "label": null,
-                            "logBase": 1,
-                            "max": null,
-                            "min": null,
-                            "show": true
-                        }
-                    ]
-                },
-                {
-                    "aliasColors": {},
-                    "bars": false,
-                    "datasource": "$datasource",
-                    "editable": true,
-                    "error": false,
-                    "fill": 1,
-                    "id": 15,
-                    "interval": "$summarize",
-                    "legend": {
-                        "alignAsTable": true,
-                        "avg": false,
-                        "current": true,
-                        "max": false,
-                        "min": false,
-                        "rightSide": true,
-                        "show": true,
-                        "total": false,
-                        "values": true
-                    },
-                    "lines": true,
-                    "linewidth": 1,
-                    "links": [],
-                    "nullPointMode": "connected",
-                    "percentage": false,
-                    "pointradius": 5,
-                    "points": false,
-                    "renderer": "flot",
-                    "seriesOverrides": [],
-                    "span": 6,
-                    "stack": false,
-                    "steppedLine": false,
-                    "targets": [
-                        {
-                            "alias": "$col",
-                            "dsType": "prometheus",
-                            "expr": "application_httprequests_put_size{env=\"$environment\",app=\"$application\",server=\"$server\",quantile=\"0.75\"}",
-                            "groupBy": [
-                                {
-                                    "params": [
-                                        "$interval"
-                                    ],
-                                    "type": "time"
-                                },
-                                {
-                                    "params": [
-                                        "null"
-                                    ],
-                                    "type": "fill"
-                                }
-                            ],
-                            "intervalFactor": 2,
-                            "legendFormat": "75th Percentile",
-                            "measurement": "application.httprequests__put_size",
-                            "policy": "default",
-                            "refId": "A",
-                            "resultFormat": "time_series",
-                            "select": [
-                                [
-                                    {
-                                        "params": [
-                                            "p95"
-                                        ],
-                                        "type": "field"
-                                    },
-                                    {
-                                        "params": [],
-                                        "type": "last"
-                                    },
-                                    {
-                                        "params": [
-                                            "95th percentile"
-                                        ],
-                                        "type": "alias"
-                                    }
-                                ],
-                                [
-                                    {
-                                        "params": [
-                                            "p98"
-                                        ],
-                                        "type": "field"
-                                    },
-                                    {
-                                        "params": [],
-                                        "type": "last"
-                                    },
-                                    {
-                                        "params": [
-                                            "98th percentile"
-                                        ],
-                                        "type": "alias"
-                                    }
-                                ],
-                                [
-                                    {
-                                        "params": [
-                                            "p99"
-                                        ],
-                                        "type": "field"
-                                    },
-                                    {
-                                        "params": [],
-                                        "type": "last"
-                                    },
-                                    {
-                                        "params": [
-                                            "99th percentile"
-                                        ],
-                                        "type": "alias"
-                                    }
-                                ],
-                                [
-                                    {
-                                        "params": [
-                                            "median"
-                                        ],
-                                        "type": "field"
-                                    },
-                                    {
-                                        "params": [],
-                                        "type": "median"
-                                    },
-                                    {
-                                        "params": [
-                                            "median"
-                                        ],
-                                        "type": "alias"
-                                    }
-                                ]
-                            ],
-                            "step": 10,
-                            "tags": [
-                                {
-                                    "key": "app",
-                                    "operator": "=~",
-                                    "value": "/^$application$/"
-                                },
-                                {
-                                    "condition": "AND",
-                                    "key": "env",
-                                    "operator": "=~",
-                                    "value": "/^$environment$/"
-                                }
-                            ]
-                        },
-                        {
-                            "expr": "application_httprequests_put_size{env=\"$environment\",app=\"$application\",server=\"$server\",quantile=\"0.95\"}",
-                            "intervalFactor": 2,
-                            "legendFormat": "95th Percentile",
-                            "refId": "B",
-                            "step": 10
-                        },
-                        {
-                            "expr": "application_httprequests_put_size{env=\"$environment\",app=\"$application\",server=\"$server\",quantile=\"0.99\"}",
-                            "intervalFactor": 2,
-                            "legendFormat": "99th Percentile",
-                            "refId": "C",
-                            "step": 10
-                        }
-                    ],
-                    "thresholds": [],
-                    "timeFrom": null,
-                    "timeShift": null,
-                    "title": "Put Request Size",
-                    "tooltip": {
-                        "msResolution": false,
-                        "shared": true,
-                        "sort": 0,
-                        "value_type": "individual"
-                    },
-                    "type": "graph",
-                    "xaxis": {
-                        "mode": "time",
-                        "name": null,
-                        "show": true,
-                        "values": []
-                    },
-                    "yaxes": [
-                        {
-                            "format": "bytes",
-                            "label": null,
-                            "logBase": 1,
-                            "max": null,
-                            "min": null,
-                            "show": true
-                        },
-                        {
-                            "format": "short",
-                            "label": null,
-                            "logBase": 1,
-                            "max": null,
-                            "min": null,
-                            "show": true
-                        }
-                    ]
-                }
-            ],
-            "repeat": null,
-            "repeatIteration": null,
-            "repeatRowId": null,
-            "showTitle": true,
-            "title": "PUT & POST Request Size",
-            "titleSize": "h6"
         }
     ],
     "schemaVersion": 14,
@@ -2559,19 +1890,19 @@
     "templating": {
         "list": [
             {
-                "allValue": null,
+                "allValue": ".+",
                 "current": {
-                    "text": "stage",
-                    "value": "stage"
+                    "text": "All",
+                    "value": ".+"
                 },
                 "datasource": "$datasource",
                 "hide": 0,
-                "includeAll": false,
+                "includeAll": true,
                 "label": null,
                 "multi": false,
-                "name": "environment",
+                "name": "job",
                 "options": [],
-                "query": "label_values(env)",
+                "query": "label_values(job)",
                 "refresh": 1,
                 "regex": "",
                 "sort": 1,
@@ -2582,19 +1913,42 @@
                 "useTags": false
             },
             {
-                "allValue": null,
+                "allValue": ".+",
                 "current": {
-                    "text": "App.Metrics.Prometheus.Sandbox",
-                    "value": "App.Metrics.Prometheus.Sandbox"
+                    "text": "All",
+                    "value": ".+"
                 },
                 "datasource": "$datasource",
                 "hide": 0,
-                "includeAll": false,
+                "includeAll": true,
                 "label": null,
                 "multi": false,
-                "name": "application",
+                "name": "endpoint",
                 "options": [],
-                "query": "label_values(app)",
+                "query": "label_values({job=~\"$job\"},endpoint)",
+                "refresh": 1,
+                "regex": "",
+                "sort": 1,
+                "tagValuesQuery": null,
+                "tags": [],
+                "tagsQuery": null,
+                "type": "query",
+                "useTags": false
+            },
+            {
+                "allValue": ".+",
+                "current": {
+                    "text": "All",
+                    "value": ".+"
+                },
+                "datasource": "$datasource",
+                "hide": 0,
+                "includeAll": true,
+                "label": null,
+                "multi": false,
+                "name": "method",
+                "options": [],
+                "query": "label_values({endpoint=~\"$endpoint\"},method)",
                 "refresh": 1,
                 "regex": "",
                 "sort": 1,
@@ -2704,16 +2058,16 @@
                 "allValue": null,
                 "current": {
                     "text": "All",
-                    "value": "$__all"
+                    "value": ".+"
                 },
-                "datasource": "Prometheus App Metrics",
+                "datasource": "$datasource",
                 "hide": 0,
                 "includeAll": true,
                 "label": null,
-                "multi": true,
-                "name": "server",
+                "multi": false,
+                "name": "instance",
                 "options": [],
-                "query": "label_values(server)",
+                "query": "label_values(instance)",
                 "refresh": 1,
                 "regex": "",
                 "sort": 0,
