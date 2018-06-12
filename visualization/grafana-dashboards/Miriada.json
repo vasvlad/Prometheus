@@ -1,37 +1,8 @@
 {
-  "__inputs": [
-    {
-      "name": "DS_GASB",
-      "label": "gasb",
-      "description": "",
-      "type": "datasource",
-      "pluginId": "mysql",
-      "pluginName": "MySQL"
-    }
-  ],
-  "__requires": [
-    {
-      "type": "grafana",
-      "id": "grafana",
-      "name": "Grafana",
-      "version": "5.1.3"
-    },
-    {
-      "type": "datasource",
-      "id": "mysql",
-      "name": "MySQL",
-      "version": "5.0.0"
-    },
-    {
-      "type": "panel",
-      "id": "table",
-      "name": "Table",
-      "version": "5.0.0"
-    }
-  ],
   "annotations": {
     "list": [
       {
+        "$$hashKey": "object:1697",
         "builtIn": 1,
         "datasource": "-- Grafana --",
         "enable": true,
@@ -45,16 +16,59 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": null,
+  "id": 81,
   "links": [],
   "panels": [
+    {
+      "aliasColors": {},
+      "breakPoint": "50%",
+      "cacheTimeout": null,
+      "combine": {
+        "label": "Others",
+        "threshold": 0
+      },
+      "datasource": "gasb",
+      "fontSize": "80%",
+      "format": "short",
+      "gridPos": {
+        "h": 8,
+        "w": 7,
+        "x": 0,
+        "y": 0
+      },
+      "id": 6,
+      "interval": null,
+      "legend": {
+        "percentage": true,
+        "show": true,
+        "sideWidth": null,
+        "values": true
+      },
+      "legendType": "Right side",
+      "links": [],
+      "maxDataPoints": 3,
+      "nullPointMode": "connected",
+      "pieType": "pie",
+      "strokeWidth": 1,
+      "targets": [
+        {
+          "alias": "",
+          "format": "time_series",
+          "rawSql": "SELECT  version as metric, count(version) as value,  UNIX_TIMESTAMP(ADDTIME(date_input, '03:00:00'))  as time_sec \nFROM  profycenter, employees, employees_input_device\nINNER JOIN \n(SELECT employees_input_device.uid, MAX(date_input) as TopDate \nFROM employees_input_device\nWHERE Type = '1' \nGROUP BY employees_input_device.uid) AS EachItem ON \n    EachItem.TopDate =  employees_input_device.date_input\n    AND EachItem.uid =  employees_input_device.uid\nwhere \nprofycenter.ldap= employees.unit and\nemployees_input_device.id_obj = employees.id_obj  and \nversion != \"\"  and  unit != \"28\" and unit != \"25\" group   by version\n\n",
+          "refId": "A"
+        }
+      ],
+      "title": "Версии Мириады",
+      "type": "grafana-piechart-panel",
+      "valueName": "current"
+    },
     {
       "collapsed": false,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 0
+        "y": 8
       },
       "id": 2,
       "panels": [],
@@ -63,13 +77,13 @@
     },
     {
       "columns": [],
-      "datasource": "${DS_GASB}",
+      "datasource": "gasb",
       "fontSize": "100%",
       "gridPos": {
-        "h": 9,
-        "w": 12,
-        "x": 4,
-        "y": 1
+        "h": 11,
+        "w": 18,
+        "x": 2,
+        "y": 9
       },
       "id": 4,
       "links": [],
@@ -77,7 +91,7 @@
       "scroll": true,
       "showHeader": true,
       "sort": {
-        "col": 0,
+        "col": 7,
         "desc": true
       },
       "styles": [
@@ -154,5 +168,6 @@
   "timezone": "",
   "title": "Miriada",
   "uid": "SaBpiUSmz",
-  "version": 2
+  "version": 17
 }
+
