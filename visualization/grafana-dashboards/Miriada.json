@@ -52,9 +52,22 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1528832236575,
+  "iteration": 1528916050799,
   "links": [],
   "panels": [
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 2,
+      "panels": [],
+      "title": "Информация",
+      "type": "row"
+    },
     {
       "aliasColors": {},
       "breakPoint": "50%",
@@ -67,10 +80,10 @@
       "fontSize": "80%",
       "format": "short",
       "gridPos": {
-        "h": 8,
+        "h": 11,
         "w": 7,
         "x": 0,
-        "y": 0
+        "y": 1
       },
       "id": 6,
       "interval": null,
@@ -80,7 +93,7 @@
         "sideWidth": null,
         "values": true
       },
-      "legendType": "Right side",
+      "legendType": "Under graph",
       "links": [],
       "maxDataPoints": 3,
       "nullPointMode": "connected",
@@ -90,7 +103,7 @@
         {
           "alias": "",
           "format": "time_series",
-          "rawSql": "SELECT  version as metric, count(version) as value,  UNIX_TIMESTAMP(ADDTIME(date_input, '03:00:00'))  as time_sec \nFROM  profycenter, employees, employees_input_device\nINNER JOIN \n(SELECT employees_input_device.uid, MAX(date_input) as TopDate \nFROM employees_input_device\nWHERE Type = '1' \nGROUP BY employees_input_device.uid) AS EachItem ON \n    EachItem.TopDate =  employees_input_device.date_input\n    AND EachItem.uid =  employees_input_device.uid\nwhere \nprofycenter.ldap= employees.unit and  profycenter.profycenter in ( $Profycenter ) and\nemployees_input_device.id_obj = employees.id_obj  and \nversion != \"\"  and  unit != \"28\" and unit != \"25\" group   by version\n\n",
+          "rawSql": "SELECT  version as metric, count(version) as value,  UNIX_TIMESTAMP(ADDTIME(date_input, '03:00:00'))  as time_sec \nFROM  profycenter, employees, employees_input_device\nINNER JOIN \n(SELECT employees_input_device.uid, MAX(date_input) as TopDate \nFROM employees_input_device\nWHERE Type = '1' \nGROUP BY employees_input_device.uid) AS EachItem ON \n    EachItem.TopDate =  employees_input_device.date_input\n    AND EachItem.uid =  employees_input_device.uid\nwhere \nprofycenter.ldap= employees.unit and  profycenter.profycenter in ( $Profycenter ) and\nversion in ($Version) and\nemployees_input_device.id_obj = employees.id_obj  and \nversion != \"\"  and  unit != \"28\" and unit != \"25\" group   by version\n\n",
           "refId": "A"
         }
       ],
@@ -99,27 +112,14 @@
       "valueName": "current"
     },
     {
-      "collapsed": false,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 8
-      },
-      "id": 2,
-      "panels": [],
-      "title": "Information",
-      "type": "row"
-    },
-    {
       "columns": [],
       "datasource": "${DS_GASB}",
       "fontSize": "100%",
       "gridPos": {
         "h": 11,
-        "w": 18,
-        "x": 2,
-        "y": 9
+        "w": 16,
+        "x": 7,
+        "y": 1
       },
       "id": 4,
       "links": [],
@@ -127,8 +127,8 @@
       "scroll": true,
       "showHeader": true,
       "sort": {
-        "col": 7,
-        "desc": true
+        "col": 2,
+        "desc": false
       },
       "styles": [
         {
@@ -156,7 +156,7 @@
         {
           "alias": "",
           "format": "table",
-          "rawSql": "SELECT profycenter.profycenter as profycenter, employees_input_device.uid as uid, ADDTIME(date_input, '03:00:00')  as date, fio, post, unit, ou, version\nFROM  profycenter, employees, employees_input_device\nINNER JOIN \n(SELECT uid, MAX(date_input) as TopDate \nFROM employees_input_device\nWHERE Type = '1' \nGROUP BY uid) AS EachItem ON \n    EachItem.TopDate =  employees_input_device.date_input\n    AND EachItem.uid =  employees_input_device.uid\nwhere \nprofycenter.ldap= employees.unit and profycenter.profycenter in ( $Profycenter )and\nemployees_input_device.id_obj = employees.id_obj  and \nversion != \"\"  and  unit != \"28\" and unit != \"25\" group   by uid \n\n",
+          "rawSql": "SELECT profycenter.profycenter as profycenter, employees_input_device.uid as uid, ADDTIME(date_input, '03:00:00')  as date, fio, post, unit, ou, version\nFROM  profycenter, employees, employees_input_device\nINNER JOIN \n(SELECT uid, MAX(date_input) as TopDate \nFROM employees_input_device\nWHERE Type = '1' \nGROUP BY uid) AS EachItem ON \n    EachItem.TopDate =  employees_input_device.date_input\n    AND EachItem.uid =  employees_input_device.uid\nwhere \nprofycenter.ldap= employees.unit and profycenter.profycenter in ( $Profycenter )and\nversion in ($Version) and\nemployees_input_device.id_obj = employees.id_obj  and \nversion != \"\"  and  unit != \"28\" and unit != \"25\" group   by uid \n\n",
           "refId": "A"
         }
       ],
@@ -182,6 +182,26 @@
         "name": "Profycenter",
         "options": [],
         "query": "select distinct profycenter from profycenter",
+        "refresh": 1,
+        "regex": "",
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "${DS_GASB}",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Версия",
+        "multi": true,
+        "name": "Version",
+        "options": [],
+        "query": "SELECT  distinct version   FROM  profycenter, employees, employees_input_device INNER JOIN  (SELECT employees_input_device.uid, MAX(date_input) as TopDate  FROM employees_input_device WHERE Type = '1'  GROUP BY employees_input_device.uid) AS EachItem ON      EachItem.TopDate =  employees_input_device.date_input     AND EachItem.uid =  employees_input_device.uid where  profycenter.ldap= employees.unit and  profycenter.profycenter in ( $Profycenter ) and employees_input_device.id_obj = employees.id_obj  and  version != \"\"  and  unit != \"28\" and unit != \"25\" group   by version",
         "refresh": 1,
         "regex": "",
         "sort": 1,
@@ -225,5 +245,5 @@
   "timezone": "",
   "title": "Miriada",
   "uid": "SaBpiUSmz",
-  "version": 32
+  "version": 6
 }
