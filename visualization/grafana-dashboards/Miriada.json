@@ -52,7 +52,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1528916050799,
+  "iteration": 1528916839992,
   "links": [],
   "panels": [
     {
@@ -117,7 +117,7 @@
       "fontSize": "100%",
       "gridPos": {
         "h": 11,
-        "w": 16,
+        "w": 17,
         "x": 7,
         "y": 1
       },
@@ -127,7 +127,7 @@
       "scroll": true,
       "showHeader": true,
       "sort": {
-        "col": 2,
+        "col": null,
         "desc": false
       },
       "styles": [
@@ -156,7 +156,7 @@
         {
           "alias": "",
           "format": "table",
-          "rawSql": "SELECT profycenter.profycenter as profycenter, employees_input_device.uid as uid, ADDTIME(date_input, '03:00:00')  as date, fio, post, unit, ou, version\nFROM  profycenter, employees, employees_input_device\nINNER JOIN \n(SELECT uid, MAX(date_input) as TopDate \nFROM employees_input_device\nWHERE Type = '1' \nGROUP BY uid) AS EachItem ON \n    EachItem.TopDate =  employees_input_device.date_input\n    AND EachItem.uid =  employees_input_device.uid\nwhere \nprofycenter.ldap= employees.unit and profycenter.profycenter in ( $Profycenter )and\nversion in ($Version) and\nemployees_input_device.id_obj = employees.id_obj  and \nversion != \"\"  and  unit != \"28\" and unit != \"25\" group   by uid \n\n",
+          "rawSql": "SELECT profycenter.profycenter as Профицентр, employees_input_device.uid as uid, ADDTIME(date_input, '03:00:00')  as Дата, fio as ФИО,\npost as Должность, ou as Подразделение, version as Версия, unit\nFROM  profycenter, employees, employees_input_device\nINNER JOIN \n(SELECT uid, MAX(date_input) as TopDate \nFROM employees_input_device\nWHERE Type = '1' \nGROUP BY uid) AS EachItem ON \n    EachItem.TopDate =  employees_input_device.date_input\n    AND EachItem.uid =  employees_input_device.uid\nwhere \nprofycenter.ldap= employees.unit and profycenter.profycenter in ( $Profycenter )and\nversion in ($Version) and\nemployees_input_device.id_obj = employees.id_obj  and \nversion != \"\"  and  unit != \"28\" and unit != \"25\" group   by uid \n\n",
           "refId": "A"
         }
       ],
@@ -245,5 +245,5 @@
   "timezone": "",
   "title": "Miriada",
   "uid": "SaBpiUSmz",
-  "version": 6
+  "version": 9
 }
