@@ -43,7 +43,9 @@
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
+        "limit": 100,
         "name": "Annotations & Alerts",
+        "showIn": 0,
         "type": "dashboard"
       }
     ]
@@ -52,7 +54,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1528916839992,
+  "iteration": 1535639418776,
   "links": [],
   "panels": [
     {
@@ -127,7 +129,7 @@
       "scroll": true,
       "showHeader": true,
       "sort": {
-        "col": null,
+        "col": 2,
         "desc": false
       },
       "styles": [
@@ -201,7 +203,7 @@
         "multi": true,
         "name": "Version",
         "options": [],
-        "query": "SELECT  distinct version   FROM  profycenter, employees, employees_input_device INNER JOIN  (SELECT employees_input_device.uid, MAX(date_input) as TopDate  FROM employees_input_device WHERE Type = '1'  GROUP BY employees_input_device.uid) AS EachItem ON      EachItem.TopDate =  employees_input_device.date_input     AND EachItem.uid =  employees_input_device.uid where  profycenter.ldap= employees.unit and  profycenter.profycenter in ( $Profycenter ) and employees_input_device.id_obj = employees.id_obj  and  version != \"\"  and  unit != \"28\" and unit != \"25\" group   by version",
+        "query": "SELECT  distinct version   FROM  profycenter, employees, employees_input_device INNER JOIN  (SELECT employees_input_device.uid, MAX(date_input) as TopDate  FROM employees_input_device WHERE Type = '1'  GROUP BY employees_input_device.uid) AS EachItem ON      EachItem.TopDate =  employees_input_device.date_input     AND EachItem.uid =  employees_input_device.uid where  profycenter.ldap= employees.unit and  profycenter.profycenter in ( $Profycenter ) and employees_input_device.id_obj = employees.id_obj  and  version != \"\"  and  app= \"mobilemiriada\" and unit != \"28\" and unit != \"25\" group   by version",
         "refresh": 1,
         "regex": "",
         "sort": 1,
@@ -245,5 +247,5 @@
   "timezone": "",
   "title": "Miriada",
   "uid": "SaBpiUSmz",
-  "version": 9
+  "version": 11
 }
