@@ -1450,7 +1450,7 @@
                         {
                             "alias": "$tag_route",
                             "dsType": "prometheus",
-                            "expr": "topk(4,request_latency_seconds_bucket{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\",le=\"1.0\"})",
+                            "expr": "topk(2, histogram_quantile(1, rate(request_latency_seconds_bucket{job=~\"$job\",endpoint=~\"$endpoint\",instance=~\"$instance\",method=~\"$method\"}[2m])",
                             "groupBy": [
                                 {
                                     "params": [
